@@ -27,7 +27,7 @@ def register() -> tuple:
     :return:
     """
     # import here because of circular reference
-    from keanu.models.users import User, UserFullName, PaymentInfo, Address
+    from hopkin.models.users import User, UserFullName, PaymentInfo, Address
     if request.json is not None:
         new_user = User(
             username=request.json['username'],
@@ -69,7 +69,7 @@ def login() -> tuple:
     :return: token
     """
     # import here because of circular reference
-    from keanu.models.users import User
+    from hopkin.models.users import User
     if ('username' in request.headers) and ('password' in request.headers):
         username = request.headers['username']
         password = request.headers['password']
@@ -84,6 +84,10 @@ def login() -> tuple:
         # verify password
         if not check_password_hash(user.password, password):
             return jsonify({'error': 'wrong username or password'}), 403
+
+    # TODO check if user has token
+    # if token return token
+    # else gen new token
 
     # generate a new token for the user for 1 week
     jwt_token = jwt.encode({

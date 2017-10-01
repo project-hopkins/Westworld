@@ -4,11 +4,11 @@ from flask import Flask, jsonify, request, g
 from flask_cors import CORS
 from flask_mongoalchemy import MongoAlchemy
 from flask_autodoc import Autodoc
-from keanu.routes.login import login_api
-from keanu.routes.items import item_api
-from keanu.routes.customer import customer_api
+from hopkin.routes.login import login_api
+from hopkin.routes.items import item_api
+from hopkin.routes.customer import customer_api
 
-from keanu.routes.orders import order_api
+from hopkin.routes.orders import order_api
 
 flask_app = Flask(__name__)
 flask_app.config['MONGOALCHEMY_CONNECTION_STRING'] = os.getenv('DBURI', 'mongodb://localhost/kanaoreeves')
