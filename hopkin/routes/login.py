@@ -70,6 +70,7 @@ def login() -> tuple:
     """
     # import here because of circular reference
     from hopkin.models.users import User
+
     if ('username' in request.headers) and ('password' in request.headers):
         username = request.headers['username']
         password = request.headers['password']
@@ -89,19 +90,21 @@ def login() -> tuple:
     # if token return token
     # else gen new token
 
-    # generate a new token for the user for 1 week
-    jwt_token = jwt.encode({
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=1),
-        'user_id': str(user.mongo_id)},
-        'secret', algorithm='HS512')
+    if user.token:
+        jwt_token = user.token
+    else:
+        # generate a new token for the user for 1 week
+        token = jwt.encode({
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=1),
+            'user_id': str(user.mongo_id)},
+            'secret', algorithm='HS512')
+        jwt_token = token.decode("utf-8")
+        user.token = jwt_token
+        user.save()
 
-    user.token = jwt_token.decode("utf-8")
-    user.save()
-
-    return jsonify(
-        {
+    return jsonify({
             'data': {
-                'token': jwt_token.decode("utf-8"),
+                'token': jwt_token,
                 'adminRights': user.adminRights
             }
         }
