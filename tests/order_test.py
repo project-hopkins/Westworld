@@ -1,8 +1,8 @@
 import unittest
 import json
 
-from keanu.app import flask_app
-from keanu.models.orders import Order
+from hopkin.app import flask_app
+from hopkin.models.orders import Order
 
 
 class TestOrderRoute(unittest.TestCase):

@@ -1,4 +1,4 @@
-from keanu.app import flask_db as db
+from hopkin.app import flask_db as db
 from mongoalchemy.document import Index
 
 

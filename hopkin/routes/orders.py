@@ -26,7 +26,7 @@ def get_user_orders() -> dict:
     returns all the orders for user as a json array
     :return:
     """
-    from keanu.models.orders import Order
+    from hopkin.models.orders import Order
 
     # get all orders
     orders = Order.query.filter(Order.userId == str(g.user_id)).all()  # create orders list
@@ -55,7 +55,7 @@ def add_order() -> tuple:
     Adds a new order to the database 
     :return: 
     """
-    from keanu.models.orders import Order, ItemQuantity
+    from hopkin.models.orders import Order, ItemQuantity
 
     if request.json is not None:
         # find specific item
