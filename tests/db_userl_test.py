@@ -1,6 +1,6 @@
 import unittest
-from keanu.app import flask_app
-from keanu.models.users import User, UserFullName, PaymentInfo, Address
+from hopkin.app import flask_app
+from hopkin.models.users import User, UserFullName, PaymentInfo, Address
 import datetime
 
 

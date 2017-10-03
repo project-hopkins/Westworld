@@ -1,7 +1,7 @@
 import unittest
 
-from keanu.app import flask_app
-from keanu.models.items import Item
+from hopkin.app import flask_app
+from hopkin.models.items import Item
 
 
 class TestItems(unittest.TestCase):

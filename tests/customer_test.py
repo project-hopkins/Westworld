@@ -1,6 +1,6 @@
 import unittest
 import json
-from keanu.app import flask_app
+from hopkin.app import flask_app
 
 
 class TestCustomerInfo(unittest.TestCase):
@@ -38,7 +38,7 @@ class TestCustomerInfo(unittest.TestCase):
         self.assertIsNotNone(result, 'No user info')
 
     def test_customer_profile_update(self):
-        from keanu.models.users import User
+        from hopkin.models.users import User
 
         # creating new user
         data = '{"address": {"name": "Queen", "number": 155, "postalCode": "M3E5R1", "streetType": "Street"}, ' \

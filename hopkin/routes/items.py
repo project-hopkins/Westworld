@@ -37,7 +37,7 @@ def get_all_items() -> dict:
     returns all the items as a json array
     :return:
     """
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
     # get all items
     items = Item.query.all()
     # create items list
@@ -51,7 +51,7 @@ def get_all_items() -> dict:
 @item_api.route('/item/id/<item_id>', strict_slashes=False, methods=['GET'])
 @auto.doc()
 def get_item_by_id(item_id) -> tuple:
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
     # find specific item
     item = Item.query.filter(Item.mongo_id == item_id).first()
     item_json = get_item_as_object(item)
@@ -61,7 +61,7 @@ def get_item_by_id(item_id) -> tuple:
 @item_api.route('/item/category/<category>', strict_slashes=False, methods=['GET'])
 @auto.doc()
 def get_item_by_category(category) -> tuple:
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
     # find items by category
     items = Item.query.filter(Item.category == category)
     # create items list
@@ -92,7 +92,7 @@ def search_item() -> tuple:
     search the names and tags
     :return: 
     """
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
     items_list = []
     query: str = request.args['q']
 
@@ -126,7 +126,7 @@ def search_item() -> tuple:
 @item_api.route('/admin/item/add', strict_slashes=False, methods=['POST'])
 @auto.doc()
 def add_new_item() -> tuple:
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
     if request.json is not None and g.is_admin:
         new_item = Item(
             name=request.json['name'],
@@ -147,7 +147,7 @@ def add_new_item() -> tuple:
 @item_api.route('/admin/item/delete/<item_id>', strict_slashes=False, methods=['POST'])
 @auto.doc()
 def delete_item(item_id):
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
     # search for item by id
     item = Item.query.get(str(item_id))
     if item is not None and g.is_admin:
@@ -161,7 +161,7 @@ def delete_item(item_id):
 @item_api.route('/admin/item/update', strict_slashes=False, methods=['POST'])
 @auto.doc()
 def update_item():
-    from keanu.models.items import Item
+    from hopkin.models.items import Item
 
     if request.json is not None:
         item_update = Item.query.get(request.json['_id'])

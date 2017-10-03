@@ -1,4 +1,4 @@
-from keanu.app import flask_db as db
+from hopkin.app import flask_db as db
 
 
 class ItemQuantity(db.Document):

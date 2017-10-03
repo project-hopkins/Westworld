@@ -23,7 +23,7 @@ def customer_payment_info() -> dict:
     """
     Gets a customers payment info
     """
-    from keanu.models.users import User
+    from hopkin.models.users import User
     user = User.query.get(g.user_id)
     payment_info = user.paymentInfo
 
@@ -39,6 +39,7 @@ def customer_payment_info() -> dict:
         }
     })
 
+
 @customer_api.route('/customer/profile', strict_slashes=False, methods=['GET'])
 @auto.doc()
 def customer_profile_info() -> dict:
@@ -46,7 +47,7 @@ def customer_profile_info() -> dict:
     Gets a customers profile info
     :return:
     """
-    from keanu.models.users import User
+    from hopkin.models.users import User
     request = User.query.get(g.user_id)
     user_info = dict(
         username=request.username,
@@ -83,32 +84,32 @@ def customer_profile_update() -> dict:
 
     if request.json is not None:
 
-        from keanu.models.users import User, UserFullName, PaymentInfo, Address
-        #readd the the user to the db
+        from hopkin.models.users import User, UserFullName, PaymentInfo, Address
+        # read the the user to the db
         if request.json is not None:
             user_update = User(
-                username= request.json['username'],
-                password= request.json['password'],
-                displayName= UserFullName(
-                    firstName= request.json['displayName']['firstName'],
-                    lastName= request.json['displayName']['lastName']
+                username=request.json['username'],
+                password=request.json['password'],
+                displayName=UserFullName(
+                    firstName=request.json['displayName']['firstName'],
+                    lastName=request.json['displayName']['lastName']
                 ),
 
-                email= request.json['email'],
-                adminRights= request.json['adminRights'],
+                email=request.json['email'],
+                adminRights=request.json['adminRights'],
 
-                paymentInfo= PaymentInfo(
-                    name= request.json['paymentInfo']['name'],
-                    cardType= request.json['paymentInfo']['cardType'],
-                    num= int(request.json['paymentInfo']['num']),
-                    expiry= datetime.datetime.strptime(request.json['paymentInfo']['expiry'], "%w/%m/%y %I:%M:%S %p UTC")
+                paymentInfo=PaymentInfo(
+                    name=request.json['paymentInfo']['name'],
+                    cardType=request.json['paymentInfo']['cardType'],
+                    num=int(request.json['paymentInfo']['num']),
+                    expiry=datetime.datetime.strptime(request.json['paymentInfo']['expiry'], "%w/%m/%y %I:%M:%S %p UTC")
                 ),
 
-                address= Address(
-                    number= int(request.json['address']['number']),
-                    name= request.json['address']['name'],
-                    streetType= request.json['address']['streetType'],
-                    postalCode= request.json['address']['postalCode']
+                address=Address(
+                    number=int(request.json['address']['number']),
+                    name=request.json['address']['name'],
+                    streetType=request.json['address']['streetType'],
+                    postalCode=request.json['address']['postalCode']
                 )
             )
 

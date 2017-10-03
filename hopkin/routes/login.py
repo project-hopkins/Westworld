@@ -27,7 +27,7 @@ def register() -> tuple:
     :return:
     """
     # import here because of circular reference
-    from keanu.models.users import User, UserFullName, PaymentInfo, Address
+    from hopkin.models.users import User, UserFullName, PaymentInfo, Address
     if request.json is not None:
         new_user = User(
             username=request.json['username'],
@@ -69,7 +69,8 @@ def login() -> tuple:
     :return: token
     """
     # import here because of circular reference
-    from keanu.models.users import User
+    from hopkin.models.users import User
+
     if ('username' in request.headers) and ('password' in request.headers):
         username = request.headers['username']
         password = request.headers['password']
@@ -85,19 +86,25 @@ def login() -> tuple:
         if not check_password_hash(user.password, password):
             return jsonify({'error': 'wrong username or password'}), 403
 
-    # generate a new token for the user for 1 week
-    jwt_token = jwt.encode({
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=1),
-        'user_id': str(user.mongo_id)},
-        'secret', algorithm='HS512')
+    # TODO check if user has token
+    # if token return token
+    # else gen new token
 
-    user.token = jwt_token.decode("utf-8")
-    user.save()
+    if user.token:
+        jwt_token = user.token
+    else:
+        # generate a new token for the user for 1 week
+        token = jwt.encode({
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(weeks=1),
+            'user_id': str(user.mongo_id)},
+            'secret', algorithm='HS512')
+        jwt_token = token.decode("utf-8")
+        user.token = jwt_token
+        user.save()
 
-    return jsonify(
-        {
+    return jsonify({
             'data': {
-                'token': jwt_token.decode("utf-8"),
+                'token': jwt_token,
                 'adminRights': user.adminRights
             }
         }
