@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 import json
 from flask import Blueprint, jsonify, request, g
-from flask_autodoc import Autodoc
 
 item_api = Blueprint('itemApi', __name__)
-
-auto = Autodoc()
 
 
 def get_item_as_object(item):
@@ -31,7 +28,6 @@ def login_doc():
 
 
 @item_api.route('/item', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def get_all_items() -> dict:
     """
     returns all the items as a json array
@@ -49,7 +45,6 @@ def get_all_items() -> dict:
 
 
 @item_api.route('/item/id/<item_id>', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def get_item_by_id(item_id) -> tuple:
     from hopkin.models.items import Item
     # find specific item
@@ -59,7 +54,6 @@ def get_item_by_id(item_id) -> tuple:
 
 
 @item_api.route('/item/category/<category>', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def get_item_by_category(category) -> tuple:
     from hopkin.models.items import Item
     # find items by category
@@ -84,7 +78,6 @@ def get_category_count(category) -> tuple:
 
 
 @item_api.route('/item/search', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def search_item() -> tuple:
     """
     Searches items if query less that 3 
@@ -124,7 +117,6 @@ def search_item() -> tuple:
 
 
 @item_api.route('/admin/item/add', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def add_new_item() -> tuple:
     from hopkin.models.items import Item
     if request.json is not None and g.is_admin:
@@ -145,7 +137,6 @@ def add_new_item() -> tuple:
 
 
 @item_api.route('/admin/item/delete/<item_id>', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def delete_item(item_id):
     from hopkin.models.items import Item
     # search for item by id
@@ -159,7 +150,6 @@ def delete_item(item_id):
 
 
 @item_api.route('/admin/item/update', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def update_item():
     from hopkin.models.items import Item
 

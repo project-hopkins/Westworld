@@ -3,7 +3,6 @@ import os
 from flask import Flask, jsonify, request, g
 from flask_cors import CORS
 from flask_mongoalchemy import MongoAlchemy
-from flask_autodoc import Autodoc
 from hopkin.routes.login import login_api
 from hopkin.routes.items import item_api
 from hopkin.routes.customer import customer_api
@@ -22,16 +21,7 @@ flask_app.register_blueprint(item_api)
 flask_app.register_blueprint(order_api)
 flask_app.register_blueprint(customer_api)
 
-auto = Autodoc(flask_app)
 
-
-@flask_app.route('/spec', methods=['GET'])
-def spec():
-    """
-    Spec for root endpoints
-    :return:
-    """
-    return auto.html()
 
 
 @flask_app.before_request
@@ -66,7 +56,6 @@ def before_request() -> tuple:
 
 
 @flask_app.route('/', methods=['GET'])
-@auto.doc()
 def root():
     """
     Root api to test if its working

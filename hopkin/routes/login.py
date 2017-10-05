@@ -3,24 +3,12 @@ import jwt
 import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, jsonify, request
-from flask_autodoc import Autodoc
+
 
 login_api = Blueprint('loginApi', __name__)
 
-auto = Autodoc()
-
-
-@login_api.route('/login/spec', strict_slashes=False)
-def login_doc():
-    """
-    Documentation for the /login route
-    :return:
-    """
-    return auto.html()
-
 
 @login_api.route('/login/register', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def register() -> tuple:
     """
     Register a new user
@@ -59,7 +47,6 @@ def register() -> tuple:
 
 
 @login_api.route('/login', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def login() -> tuple:
     """
     Login to the api
