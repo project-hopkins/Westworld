@@ -77,7 +77,7 @@ def login() -> tuple:
     # if token return token
     # else gen new token
 
-    if user.token:
+    if hasattr(user, 'token'):
         jwt_token = user.token
     else:
         # generate a new token for the user for 1 week
