@@ -2,11 +2,11 @@
 import os
 from flask import Flask, jsonify, request, g
 from flask_cors import CORS
+
 from flask_mongoalchemy import MongoAlchemy
 from hopkin.routes.login import login_api
 from hopkin.routes.items import item_api
 from hopkin.routes.customer import customer_api
-
 from hopkin.routes.orders import order_api
 
 flask_app = Flask(__name__)
@@ -20,8 +20,6 @@ flask_app.register_blueprint(login_api)
 flask_app.register_blueprint(item_api)
 flask_app.register_blueprint(order_api)
 flask_app.register_blueprint(customer_api)
-
-
 
 
 @flask_app.before_request
