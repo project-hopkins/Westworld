@@ -11,6 +11,9 @@ login_api = Blueprint('loginApi', __name__)
 @login_api.route('/login/register', strict_slashes=False, methods=['POST'])
 def register() -> tuple:
     """
+
+    swagger_from_file: ../swagger/login/register.yml
+
     Register a new user
     :return:
     """
