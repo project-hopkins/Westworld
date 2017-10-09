@@ -1,2 +1,74 @@
 Adds a new user to the database
 ---
+tags:
+  - login
+definitions:
+  - schema:
+      id: RegisterResponse
+      properties:
+        name:
+         type: string
+         description: full user object
+parameters:
+  - in: body
+    name: userObject
+    schema:
+      id: User
+      properties:
+        username:
+          type: string
+          description: username
+        password:
+          type: string
+          description: password
+        displayName:
+          description: Name for user to display
+          schema:
+            id: DisplayName
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+        email:
+          type: string
+          description: email
+        adminRights:
+          type: boolean
+          description: if a user is an admin
+        paymentInfo:
+          description: Payment information for user
+          schema:
+            id: PaymentInfo
+            properties:
+              name:
+                type: string
+              cardType:
+                type: string
+              num:
+                type: number
+              expiry:
+                type: string
+                format: date
+        address:
+          description: address for user
+          schema:
+            id: Address
+            properties:
+              number:
+                type: number
+              name:
+                type: string
+              streetType:
+                type: string
+              postalCode:
+                type: string
+responses:
+  200:
+    description: JWT Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/RegisterResponse'
+  401:
+    description: error with username or password

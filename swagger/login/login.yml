@@ -9,6 +9,7 @@ definitions:
         name:
          type: string
          description: the users JWT
+      properties:
         name:
          type: string
          description: If the user has admin rights
