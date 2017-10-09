@@ -49,6 +49,9 @@ def register() -> tuple:
 @login_api.route('/login', strict_slashes=False, methods=['POST'])
 def login() -> tuple:
     """
+
+    swagger_from_file: ../swagger/login/login.yml
+
     Login to the api
     Pass in the username and password in the header
     A token is returned

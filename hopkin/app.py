@@ -2,6 +2,7 @@
 import os
 from flask import Flask, jsonify, request, g
 from flask_cors import CORS
+from flask_swagger import swagger
 
 from flask_mongoalchemy import MongoAlchemy
 from hopkin.routes.login import login_api
@@ -60,6 +61,14 @@ def root():
     :return:
     """
     return jsonify({'data': {'success': True}})
+
+
+@flask_app.route('/spec')
+def spec():
+    swag = swagger(flask_app, from_file_keyword='swagger_from_file')
+    swag['info']['version'] = "1.0"
+    swag['info']['title'] = "Hopkins"
+    return jsonify(swag)
 
 
 @flask_app.errorhandler(404)
