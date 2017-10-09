@@ -1,0 +1,18 @@
+Gets username password and returns a JWT
+---
+tags:
+  - login
+parameters:
+  - in: header
+    name: username
+    description: username of user
+    type: string
+    required: true
+  - in: header
+    name: password
+    description: password of user
+    type: string
+    required: true
+responses:
+  200:
+    description: User created
