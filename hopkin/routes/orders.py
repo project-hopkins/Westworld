@@ -3,24 +3,11 @@ import json
 import requests
 from datetime import datetime
 from flask import Blueprint, jsonify, request, g
-from flask_autodoc import Autodoc
 
 order_api = Blueprint('orderApi', __name__)
 
-auto = Autodoc()
-
-
-@order_api.route('/order/spec', strict_slashes=False)
-def order_doc():
-    """
-    Documentation for the /order route
-    :return:
-    """
-    return auto.html()
-
 
 @order_api.route('/order', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def get_user_orders() -> dict:
     """
     returns all the orders for user as a json array
@@ -49,7 +36,6 @@ def get_user_orders() -> dict:
 
 
 @order_api.route('/order/add', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def add_order() -> tuple:
     """
     Adds a new order to the database 

@@ -3,26 +3,17 @@ import jwt
 import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, jsonify, request
-from flask_autodoc import Autodoc
+
 
 login_api = Blueprint('loginApi', __name__)
 
-auto = Autodoc()
-
-
-@login_api.route('/login/spec', strict_slashes=False)
-def login_doc():
-    """
-    Documentation for the /login route
-    :return:
-    """
-    return auto.html()
-
 
 @login_api.route('/login/register', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def register() -> tuple:
     """
+
+    swagger_from_file: ../swagger/login/register.yml
+
     Register a new user
     :return:
     """
@@ -59,9 +50,11 @@ def register() -> tuple:
 
 
 @login_api.route('/login', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def login() -> tuple:
     """
+
+    swagger_from_file: ../swagger/login/login.yml
+
     Login to the api
     Pass in the username and password in the header
     A token is returned
@@ -90,7 +83,7 @@ def login() -> tuple:
     # if token return token
     # else gen new token
 
-    if user.token:
+    if hasattr(user, 'token'):
         jwt_token = user.token
     else:
         # generate a new token for the user for 1 week

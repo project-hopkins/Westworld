@@ -1,24 +1,10 @@
 from flask import Blueprint, jsonify, g, request
-from flask_autodoc import Autodoc
 import datetime
 
 customer_api = Blueprint('customer_api', __name__)
 
-auto = Autodoc()
-
-
-@customer_api.route('/customer/spec', strict_slashes=False)
-@auto.doc()
-def customer_doc():
-    """
-    Documentation for customer
-    info page
-    """
-    return auto.html()
-
 
 @customer_api.route('/customer/payment', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def customer_payment_info() -> dict:
     """
     Gets a customers payment info
@@ -41,7 +27,6 @@ def customer_payment_info() -> dict:
 
 
 @customer_api.route('/customer/profile', strict_slashes=False, methods=['GET'])
-@auto.doc()
 def customer_profile_info() -> dict:
     """
     Gets a customers profile info
@@ -79,7 +64,6 @@ def customer_profile_info() -> dict:
 
 
 @customer_api.route('/customer/profile/edit', strict_slashes=False, methods=['POST'])
-@auto.doc()
 def customer_profile_update() -> dict:
 
     if request.json is not None:

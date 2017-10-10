@@ -2,12 +2,12 @@
 import os
 from flask import Flask, jsonify, request, g
 from flask_cors import CORS
+from flask_swagger import swagger
+
 from flask_mongoalchemy import MongoAlchemy
-from flask_autodoc import Autodoc
 from hopkin.routes.login import login_api
 from hopkin.routes.items import item_api
 from hopkin.routes.customer import customer_api
-
 from hopkin.routes.orders import order_api
 
 flask_app = Flask(__name__)
@@ -21,17 +21,6 @@ flask_app.register_blueprint(login_api)
 flask_app.register_blueprint(item_api)
 flask_app.register_blueprint(order_api)
 flask_app.register_blueprint(customer_api)
-
-auto = Autodoc(flask_app)
-
-
-@flask_app.route('/spec', methods=['GET'])
-def spec():
-    """
-    Spec for root endpoints
-    :return:
-    """
-    return auto.html()
 
 
 @flask_app.before_request
@@ -66,13 +55,20 @@ def before_request() -> tuple:
 
 
 @flask_app.route('/', methods=['GET'])
-@auto.doc()
 def root():
     """
     Root api to test if its working
     :return:
     """
     return jsonify({'data': {'success': True}})
+
+
+@flask_app.route('/spec')
+def spec():
+    swag = swagger(flask_app, from_file_keyword='swagger_from_file')
+    swag['info']['version'] = "1.0"
+    swag['info']['title'] = "Hopkins"
+    return jsonify(swag)
 
 
 @flask_app.errorhandler(404)
