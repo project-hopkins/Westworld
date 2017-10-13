@@ -17,6 +17,10 @@ class User:
         return flask_db.db[User.collection_name].find_one({'email': email})
 
     @staticmethod
+    def get_by_id(id):
+        return flask_db.db[User.collection_name].find_one({'_id': id})
+
+    @staticmethod
     def save(user):
         flask_db.db[User.collection_name].save(user)
 
