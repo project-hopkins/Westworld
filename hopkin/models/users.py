@@ -1,4 +1,5 @@
 from hopkin.app import flask_db
+from bson.objectid import ObjectId
 
 
 class User:
@@ -18,7 +19,7 @@ class User:
 
     @staticmethod
     def get_by_id(id):
-        return flask_db.db[User.collection_name].find_one({'_id': id})
+        return flask_db.db[User.collection_name].find_one({'_id': ObjectId(id)})
 
     @staticmethod
     def save(user):

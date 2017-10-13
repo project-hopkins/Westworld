@@ -1,4 +1,5 @@
 from hopkin.app import flask_db
+from bson.objectid import ObjectId
 
 
 class Order:
@@ -18,4 +19,4 @@ class Order:
 
     @staticmethod
     def remove(order_id):
-        flask_db.db[Order.collection_name].delete_one({'_id': order_id})
+        flask_db.db[Order.collection_name].delete_one({'_id': ObjectId(order_id)})
