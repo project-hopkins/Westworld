@@ -4,7 +4,6 @@ import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask import Blueprint, jsonify, request
 
-
 login_api = Blueprint('loginApi', __name__)
 
 
@@ -18,35 +17,35 @@ def register() -> tuple:
     :return:
     """
     # import here because of circular reference
-    # from hopkin.models.users import User, UserFullName, PaymentInfo, Address
-    # if request.json is not None:
-    #     new_user = User(
-    #         username=request.json['username'],
-    #         password=generate_password_hash(request.json['password']),
-    #         displayName=UserFullName(
-    #             firstName=request.json['displayName']['firstName'],
-    #             lastName=request.json['displayName']['lastName']
-    #         ),
-    #         email=request.json['email'],
-    #         adminRights=request.json['adminRights'],
-    #         paymentInfo=PaymentInfo(
-    #             name=request.json['paymentInfo']['name'],
-    #             cardType=request.json['paymentInfo']['cardType'],
-    #             num=int(request.json['paymentInfo']['num']),
-    #             expiry=datetime.datetime.strptime(request.json['paymentInfo']['expiry'],
-    #                                               "%w/%m/%y %I:%M:%S %p UTC")
-    #         ),
-    #         address=Address(
-    #             number=int(request.json['address']['number']),
-    #             name=request.json['address']['name'],
-    #             streetType=request.json['address']['streetType'],
-    #             postalCode=request.json['address']['postalCode']
-    #         )
-    #     )
-    #     new_user.save()
-    #     return jsonify({'data': {'user': request.json}})
-    # else:
-    #     return jsonify({'error': 'no username or password provided'}), 401
+    from hopkin.models.users import User
+    if request.json is not None:
+        new_user = {
+            'username': request.json['username'],
+            'password': generate_password_hash(request.json['password']),
+            'displayName': {
+                'firstName': request.json['displayName']['firstName'],
+                'lastName': request.json['displayName']['lastName']
+            },
+            'email': request.json['email'],
+            'adminRights': request.json['adminRights'],
+            'paymentInfo': {
+                'name': request.json['paymentInfo']['name'],
+                'cardType': request.json['paymentInfo']['cardType'],
+                'num': int(request.json['paymentInfo']['num']),
+                'expiry': datetime.datetime.strptime(request.json['paymentInfo']['expiry'],
+                                                     "%w/%m/%y %I:%M:%S %p UTC")
+            },
+            'address': {
+                'number': int(request.json['address']['number']),
+                'name': request.json['address']['name'],
+                'streetType': request.json['address']['streetType'],
+                'postalCode': request.json['address']['postalCode']
+            }
+        }
+        User.save(new_user)
+        return jsonify({'data': {'user': request.json}})
+    else:
+        return jsonify({'error': 'no username or password provided'}), 401
 
 
 @login_api.route('/login', strict_slashes=False, methods=['POST'])
@@ -83,8 +82,7 @@ def login() -> tuple:
     # if token return token
     # else gen new token
 
-    # if hasattr(user, 'token'):
-    if user['token']:
+    if hasattr(user, 'token'):
         jwt_token = user['token']
     else:
         # generate a new token for the user for 1 week
@@ -97,9 +95,8 @@ def login() -> tuple:
         User.save(user)
 
     return jsonify({
-            'data': {
-                'token': jwt_token,
-                'adminRights': user['adminRights']
-            }
+        'data': {
+            'token': jwt_token,
+            'adminRights': user['adminRights']
         }
-    )
+    })
