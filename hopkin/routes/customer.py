@@ -7,6 +7,9 @@ customer_api = Blueprint('customer_api', __name__)
 @customer_api.route('/customer/payment', strict_slashes=False, methods=['GET'])
 def customer_payment_info() -> dict:
     """
+
+    swagger_from_file: ../swagger/customer/payment_info.yml
+
     Gets a customers payment info
     """
     from hopkin.models.users import User
