@@ -1,4 +1,4 @@
-Delete Item from the database
+#Delete Item from the database
 ---
 tags:
   - deleteItem
@@ -15,7 +15,9 @@ parameters:
 #    description: JWT Object
 #    type: object
   - in: query
-      name: items
+      name:
+        type: string
+        description: item
         schema:
           type: list
           required: true

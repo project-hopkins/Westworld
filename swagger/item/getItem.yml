@@ -1,4 +1,4 @@
-Gets one item from the database
+#Gets one item from the database
 ---
 tags:
   - getItem
@@ -11,7 +11,9 @@ definitions:
          description: full item object
 parameters:
   - in: query
-      name: item
+      name:
+        type: string
+        description: item
         schema:
           type: object
           required: true

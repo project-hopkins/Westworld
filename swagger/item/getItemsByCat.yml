@@ -1,4 +1,4 @@
-Gets all items from the database based on category
+#Gets all items from the database based on category
 ---
 tags:
   - getItemsByCat

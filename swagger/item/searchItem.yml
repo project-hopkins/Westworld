@@ -1,4 +1,4 @@
-Searchs the database for item
+#Searchs the database for item
 ---
 tags:
   - searchItems
@@ -11,7 +11,9 @@ definitions:
          description: List of all the items with the search term
 parameters:
   - in: query
-      name: items
+      name:
+        type: string
+        description: item
         schema:
           type: list
           required: true

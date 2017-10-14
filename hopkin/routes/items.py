@@ -17,10 +17,6 @@ def get_item_as_object(item):
         "tags": item.tags
     }
 
-
-#@item_api.route('/item/spec', strict_slashes=False)
-
-
 @item_api.route('/item', strict_slashes=False, methods=['GET'])
 def get_all_items() -> dict:
     """

@@ -1,4 +1,4 @@
-Gets all items from the database
+#Gets all items from the database
 ---
 tags:
   - getItems
@@ -11,7 +11,9 @@ definitions:
          description: List of all the items
 parameters:
   - in: query
-      name: items
+      name:
+        type: string
+        description: item
         schema:
           type: list
           required: true
