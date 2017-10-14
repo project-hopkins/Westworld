@@ -1,0 +1,27 @@
+Gets the number of items in a category
+---
+tags:
+  - getNumItemsInCat
+definitions:
+  - schema:
+      id: GetNumItemsInCat
+      properties:
+        name:
+         type: int
+         description: number of items in a category
+parameters:
+   - in: query
+      name: category
+        schema:
+          type: integer
+          required: true
+
+responses:
+  200:
+    description: integer
+    schema:
+      type: int
+      items:
+        $ref: '#/definitions/GetNumItemsInCatResponse'
+  403:
+    description: error
