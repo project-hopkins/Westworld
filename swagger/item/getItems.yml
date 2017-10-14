@@ -18,9 +18,9 @@ parameters:
 
 responses:
   200:
-    description: JWT Object List
+    description: Item Object List
     schema:
-      type: objectList
+      type: List
       items:
         $ref: '#/definitions/GetItemsResponse'
   403:

@@ -18,7 +18,7 @@ parameters:
 
 responses:
   200:
-    description: JWT ObjectList
+    description: Item ObjectList
     schema:
       type: objectList
       items:

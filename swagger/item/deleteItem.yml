@@ -1,0 +1,31 @@
+Delete Item from the database
+---
+tags:
+  - deleteItem
+definitions:
+  - schema:
+      id: DeleteItemResponse
+      properties:
+        name:
+         type: string
+         description: delete an item
+parameters:
+#  - in: header
+#    name: token
+#    description: JWT Object
+#    type: object
+  - in: query
+      name: items
+        schema:
+          type: list
+          required: true
+
+responses:
+  200:
+    description: success true
+    schema:
+      type: string
+      items:
+        $ref: '#/definitions/DeleteItemResponse'
+  403:
+    description: error No item found with that id

@@ -40,9 +40,9 @@ parameters:
 
 responses:
   200:
-    description: JWT Object
+    description: Success Item Added
     schema:
-      type: object
+      type: string
       items:
         $ref: '#/definitions/AddItemResponse'
   403:
