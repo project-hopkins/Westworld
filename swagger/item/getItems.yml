@@ -2,6 +2,13 @@ Adds a new item to the database
 ---
 tags:
   - getItems
+definitions:
+  - schema:
+      id: GetItemsResponse
+      properties:
+        name:
+         type: list
+         description: List of all the items
 get:
   parameters:
      - in: query
@@ -16,6 +23,6 @@ responses:
     schema:
       type: objectList
       items:
-        $ref: '#/definitions/item'
+        $ref: '#/definitions/GetItemsResponse'
   403:
     description: error

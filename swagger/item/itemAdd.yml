@@ -2,6 +2,13 @@ Adds a new item to the database
 ---
 tags:
   - addItem
+definitions:
+  - schema:
+      id: AddItemResponse
+      properties:
+        name:
+         type: string
+         description: full item object
 
 parameters:
   - in: body
@@ -37,6 +44,6 @@ responses:
     schema:
       type: object
       items:
-        $ref: '#/definitions/addItem'
+        $ref: '#/definitions/AddItemResponse'
   403:
     description: error invalid item
