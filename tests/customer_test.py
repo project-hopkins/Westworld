@@ -61,5 +61,7 @@ class TestCustomerInfo(unittest.TestCase):
         result = self.app.post('/customer/profile/edit', data=updated_data, headers={'token': json_response})
         json_data = json.loads(result.data)
         self.assertIsNotNone(len(json_data))
-        user = User.query.filter(User.token == json_response).first()
-        user.remove()
+
+        with flask_app.app_context():
+            user = User.get_by_token(json_response)
+            User.remove(user['email'])

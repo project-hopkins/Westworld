@@ -16,19 +16,19 @@ def get_user_orders() -> dict:
     from hopkin.models.orders import Order
 
     # get all orders
-    orders = Order.query.filter(Order.userId == str(g.user_id)).all()  # create orders list
+    orders = Order.get_all(str(g.user_id))
     orders_list = []
     # create response
     for order in orders:
         items_list = []
-        for item in order.items:
-            items_list.append({'itemId': item.itemId, 'quantity': item.quantity})
+        for item in order['items']:
+            items_list.append({'itemId': item['itemId'], 'quantity': item['quantity']})
         orders_list.append({
-            "_id": str(order.mongo_id),
+            "_id": str(order['_id']),
             "items": items_list,
-            "total": str(order.total),
-            "delivery": str(order.delivery),
-            "date": datetime.strptime(order.date, '%d:%m:%Y')
+            "total": str(order['total']),
+            "delivery": str(order['delivery']),
+            "date": datetime.strptime(order['date'], '%d:%m:%Y')
         })
 
     orders_list.sort(key=lambda o: o['date'], reverse=True)
@@ -41,7 +41,7 @@ def add_order() -> tuple:
     Adds a new order to the database 
     :return: 
     """
-    from hopkin.models.orders import Order, ItemQuantity
+    from hopkin.models.orders import Order
 
     if request.json is not None:
         # find specific item
@@ -49,23 +49,23 @@ def add_order() -> tuple:
 
         for item in request.json['items']:
             key, value = item.popitem()
-            items.append(ItemQuantity(itemId=key, quantity=value))
+            items.append({'itemId': key, 'quantity': value})
 
-        new_order = Order(
-            items=items,
-            total=request.json['price'],
-            userId=str(g.user_id),
-            delivery=request.json['delivery'],
-            date=request.json['date']
-        )
-        new_order.save()
+        new_order = {
+            'items': items,
+            'total': request.json['price'],
+            'userId': str(g.user_id),
+            'delivery': request.json['delivery'],
+            'date': request.json['date']
+        }
+        new_order_id = Order.insert(new_order)
         if 'pushUserId' in request.json:
             send_notification(request.json['pushUserId'])
         # returns a message
         return jsonify({'data': {
-            'message': 'order added with id ' + str(new_order.mongo_id),
-            'orderId': str(new_order.mongo_id)
-            }
+            'message': 'order added with id ' + str(new_order_id),
+            'orderId': str(new_order_id)
+        }
         })
     else:
         return jsonify({'error': 'no order placed'}), 401

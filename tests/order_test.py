@@ -35,8 +35,8 @@ class TestOrderRoute(unittest.TestCase):
         result = self.app.post('/order/add/', headers={'token': json_login['data']['token']}, data=data, content_type='application/json')
         json_response = json.loads(result.data)
         self.assertIsNotNone(json_response['data']['orderId'], 'error in response')
-        added_order = Order.query.get(json_response['data']['orderId'])
-        added_order.remove()
+        with flask_app.app_context():
+            Order.remove(json_response['data']['orderId'])
 
     def test_get_user_orders(self):
         login = self.app.post('/login', headers={'username': 'steve', 'password': 'smith'})
