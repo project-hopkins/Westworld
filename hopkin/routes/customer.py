@@ -69,7 +69,7 @@ def customer_profile_info() -> dict:
 
 
 @customer_api.route('/customer/profile/edit', strict_slashes=False, methods=['POST'])
-def customer_profile_update() -> dict:
+def customer_profile_update() -> tuple:
     """
 
     swagger_from_file: ../swagger/customer/profile.yml
@@ -110,4 +110,4 @@ def customer_profile_update() -> dict:
 
         return jsonify({'data': {'user': user_update}})
     else:
-        return jsonify({'error': 'user not updated'})
+        return jsonify({'error': 'user not updated'}), 400
