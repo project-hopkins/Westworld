@@ -8,7 +8,7 @@ customer_api = Blueprint('customer_api', __name__)
 def customer_payment_info() -> dict:
     """
 
-    swagger_from_file: ../swagger/customer/payment_info.yml
+    swagger_from_file: ../swagger/customer/paymentInfo.yml
 
     Gets a customers payment info
     """
@@ -32,6 +32,9 @@ def customer_payment_info() -> dict:
 @customer_api.route('/customer/profile', strict_slashes=False, methods=['GET'])
 def customer_profile_info() -> dict:
     """
+
+    swagger_from_file: ../swagger/customer/profile.yml
+
     Gets a customers profile info
     :return:
     """
@@ -68,6 +71,13 @@ def customer_profile_info() -> dict:
 
 @customer_api.route('/customer/profile/edit', strict_slashes=False, methods=['POST'])
 def customer_profile_update() -> dict:
+    """
+
+    swagger_from_file: ../swagger/customer/profile.yml
+
+    Gets a customers profile info
+    :return:
+    """
 
     if request.json is not None:
 
