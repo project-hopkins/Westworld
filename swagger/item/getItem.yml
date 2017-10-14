@@ -11,13 +11,18 @@ definitions:
          description: full item object
 parameters:
   - in: body
-     # name:
-        type: string
-        description: item
-        schema:
-          type: object
-          required: true
-
+    type: query
+    description: item
+    schema:
+      type: list
+      required: true
+#  - in: body
+#     # name:
+#        type: string
+#        description: item
+#        schema:
+#          type: object
+#          required: true
 responses:
   200:
     description: Item Object

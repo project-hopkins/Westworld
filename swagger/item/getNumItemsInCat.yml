@@ -10,12 +10,17 @@ definitions:
          type: int
          description: number of items in a category
 parameters:
-   - in: body
-      #name: category
-        schema:
-          type: integer
-          required: true
-
+  - in: body
+    type: query
+    description: item
+    schema:
+      type: list
+      required: true
+#   - in: body
+#      #name: category
+#        schema:
+#          type: integer
+#          required: true
 responses:
   200:
     description: integer

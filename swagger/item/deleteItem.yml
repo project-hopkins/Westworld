@@ -15,13 +15,18 @@ parameters:
 #    description: JWT Object
 #    type: object
   - in: body
-      #name:
-        type: string
-        description: item
-        schema:
-          type: list
-          required: true
-
+    type: query
+    description: item
+    schema:
+      type: list
+      required: true
+#  - in: body
+#      #name:
+#        type: string
+#        description: item
+#        schema:
+#          type: list
+#          required: true
 responses:
   200:
     description: success true

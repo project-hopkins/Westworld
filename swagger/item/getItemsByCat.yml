@@ -10,13 +10,18 @@ definitions:
          type: string
          description: full items object list
 parameters:
-   - in: body
-      type: query
-      #name: category
-        schema:
-          type: objectList
-          required: true
-
+  - in: body
+    type: query
+    description: item
+    schema:
+      type: list
+      required: true
+#  - in: body
+#      type: query
+#      #name: category
+#        schema:
+#          type: objectList
+#          required: true
 responses:
   200:
     description: Item ObjectList
