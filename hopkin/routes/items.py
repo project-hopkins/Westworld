@@ -7,14 +7,14 @@ item_api = Blueprint('itemApi', __name__)
 
 def get_item_as_object(item):
     return {
-        "_id": str(item.mongo_id),
-        "name": item.name,
-        "description": item.description,
-        "imageURL": item.imageURL,
-        "price": item.price,
-        "calories": item.calories,
-        "category": item.category,
-        "tags": item.tags
+        "_id": str(item['_id']),
+        "name": item['name'],
+        "description": item['description'],
+        "imageURL": item['imageURL'],
+        "price": item['price'],
+        "calories": item['calories'],
+        "category": item['category'],
+        "tags": item['tags']
     }
 
 
@@ -35,7 +35,7 @@ def get_all_items() -> dict:
     """
     from hopkin.models.items import Item
     # get all items
-    items = Item.query.all()
+    items = Item.get_all()
     # create items list
     items_list = []
     # create response
@@ -48,16 +48,16 @@ def get_all_items() -> dict:
 def get_item_by_id(item_id) -> tuple:
     from hopkin.models.items import Item
     # find specific item
-    item = Item.query.filter(Item.mongo_id == item_id).first()
-    item_json = get_item_as_object(item)
-    return jsonify({'data': {'item': item_json}})
+    item = Item.get_by_id(item_id)
+
+    return jsonify({'data': {'item': get_item_as_object(item)}})
 
 
 @item_api.route('/item/category/<category>', strict_slashes=False, methods=['GET'])
 def get_item_by_category(category) -> tuple:
     from hopkin.models.items import Item
     # find items by category
-    items = Item.query.filter(Item.category == category)
+    items = Item.get_by_category(category)
     # create items list
     items_list = []
     # create response
@@ -93,25 +93,25 @@ def search_item() -> tuple:
         return jsonify({'error': 'no search results provided'})
 
     query = query.title()
-    items = Item.query.filter(Item.name.startswith(query.lower())).all()
+    items = list(Item.get_by_name_starts_with(query.lower()))
     if len(query) > 3:
-        items = items + Item.query.filter(Item.tags.startswith(query.lower())).all()
+        items = items + list(Item.get_by_tag_starts_with(query.lower()))
 
     unique_ids = []
 
     for item in items:
         if str(item.mongo_id) not in unique_ids:
             items_list.append({
-                "_id": str(item.mongo_id),
-                "name": item.name,
-                "description": item.description,
-                "imageURL": item.imageURL,
-                "price": item.price,
-                "calories": item.calories,
-                "category": item.category,
-                "tags": item.tags
+                "_id": str(item['_id']),
+                "name": item['name'],
+                "description": item['description'],
+                "imageURL": item['imageURL'],
+                "price": item['price'],
+                "calories": item['calories'],
+                "category": item['category'],
+                "tags": item['tags']
             })
-            unique_ids.append(str(item.mongo_id))
+            unique_ids.append(str(item['_id']))
 
     return jsonify({'data': {'items': items_list}})
 
@@ -120,18 +120,19 @@ def search_item() -> tuple:
 def add_new_item() -> tuple:
     from hopkin.models.items import Item
     if request.json is not None and g.is_admin:
-        new_item = Item(
-            name=request.json['name'],
-            description=request.json['description'],
-            imageURL=request.json['imageURL'],
-            price=request.json['price'],
-            calories=request.json['calories'],
-            category=request.json['category'],
-            tags=request.json['tags']
-        )
-        new_item.save()
+        new_item = {
+            'name': request.json['name'],
+            'description': request.json['description'],
+            'imageURL': request.json['imageURL'],
+            'price': request.json['price'],
+            'calories': request.json['calories'],
+            'category': request.json['category'],
+            'tags': request.json['tags']
+        }
 
-        return jsonify({'data': {'item': request.json, 'itemId': str(new_item.mongo_id)}})
+        new_item_id = Item.insert(new_item)
+
+        return jsonify({'data': {'item': request.json, 'itemId': str(new_item_id)}})
     else:
         return jsonify({'error': 'invalid item' + request.json}), 403
 
@@ -140,10 +141,10 @@ def add_new_item() -> tuple:
 def delete_item(item_id):
     from hopkin.models.items import Item
     # search for item by id
-    item = Item.query.get(str(item_id))
+    item = Item.get_by_id(str(item_id))
     if item is not None and g.is_admin:
         # remove item
-        item.remove()
+        Item.remove(item_id)
         return jsonify({'data': {'success': True}})
     else:
         return jsonify({'error': 'No item found with id ' + item_id})
@@ -154,19 +155,19 @@ def update_item():
     from hopkin.models.items import Item
 
     if request.json is not None:
-        item_update = Item.query.get(request.json['_id'])
-        item_update.calories = request.json['calories']
-        item_update.category = request.json['category']
-        item_update.description = request.json['description']
-        item_update.imageURL = request.json['imageURL']
-        item_update.name = request.json['name']
-        item_update.price = request.json['price']
-        item_update.tags = request.json['tags']
+        item_update = Item.get_by_id(request.json['_id'])
+        item_update['calories'] = request.json['calories']
+        item_update['category'] = request.json['category']
+        item_update['description'] = request.json['description']
+        item_update['imageURL'] = request.json['imageURL']
+        item_update['name'] = request.json['name']
+        item_update['price'] = request.json['price']
+        item_update['tags'] = request.json['tags']
 
-        item_update.save()
+        Item.save(item_update)
 
-        return jsonify({'data': {'message': 'Updated with item id: ' + str(item_update.mongo_id),
-                                 'mongo_id': str(item_update.mongo_id)}
+        return jsonify({'data': {'message': 'Updated with item id: ' + str(item_update['_id']),
+                                 'mongo_id': str(item_update['_id'])}
                         })
     else:
         return jsonify({'error': 'item not updated'})

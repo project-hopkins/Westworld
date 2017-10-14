@@ -4,16 +4,16 @@ from flask import Flask, jsonify, request, g
 from flask_cors import CORS
 from flask_swagger import swagger
 
-from flask_mongoalchemy import MongoAlchemy
+from flask_pymongo import PyMongo
 from hopkin.routes.login import login_api
 from hopkin.routes.items import item_api
 from hopkin.routes.customer import customer_api
 from hopkin.routes.orders import order_api
 
 flask_app = Flask(__name__)
-flask_app.config['MONGOALCHEMY_CONNECTION_STRING'] = os.getenv('DBURI', 'mongodb://localhost/kanaoreeves')
-flask_app.config['MONGOALCHEMY_DATABASE'] = 'kanaoreeves'
-flask_db = MongoAlchemy(flask_app)
+flask_app.config['MONGO_URI'] = os.getenv('DBURI', 'mongodb://localhost/kanaoreeves')
+flask_app.config['MONGO_DBNAME'] = 'kanaoreeves'
+flask_db = PyMongo(flask_app)
 
 CORS(flask_app)
 
@@ -43,13 +43,13 @@ def before_request() -> tuple:
             auth_required = False
         if auth_required and 'token' in request.headers:
             token = request.headers['token']
-            user = User.query.filter(User.token == token).first()
+            user = User.get_by_token(token)
 
             if user is None:
                 return jsonify({'error': 'not a valid token'}), 403
             else:
-                g.user_id = user.mongo_id
-                g.is_admin = user.adminRights
+                g.user_id = user['_id']
+                g.is_admin = user['adminRights']
         elif auth_required and 'token' not in request.headers:
             return jsonify({'error': 'no token provided'}), 403
 
