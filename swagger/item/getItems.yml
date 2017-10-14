@@ -1,0 +1,21 @@
+Adds a new item to the database
+---
+tags:
+  - getItems
+get:
+  parameters:
+     - in: query
+        name: items
+          schema:
+            type: list
+            required: true
+
+responses:
+  200:
+    description: JWT Object List
+    schema:
+      type: objectList
+      items:
+        $ref: '#/definitions/item'
+  403:
+    description: error

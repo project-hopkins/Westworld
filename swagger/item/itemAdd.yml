@@ -37,6 +37,6 @@ responses:
     schema:
       type: object
       items:
-        $ref: '#/definitions/item'
+        $ref: '#/definitions/addItem'
   403:
     description: error invalid item
