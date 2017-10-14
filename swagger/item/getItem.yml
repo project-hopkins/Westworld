@@ -10,11 +10,36 @@ definitions:
          type: string
          description: full item object
 parameters:
-  - in: body
-    type: query
-    description: item
+  - in: query
+    description: retrieve single item
     schema:
-      type: list
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: item name
+          itemDescription:
+            type: string
+            description: item description
+          imageURL:
+            type: string
+            description: Link to the item image
+           price:
+            type: number
+            description: price of the item
+          calories:
+            type: integer
+            description: how many calories are in the item
+          category:
+            type: string
+            description: Type of food the item is
+          tags:
+            type: array
+            items:
+              type: string
+            description: a list of the keywords that describe the item
       required: true
 #  - in: body
 #     # name:

@@ -19,14 +19,14 @@ parameters:
         name:
           type: string
           description: item name
-        description:
+        itemDescription:
           type: string
           description: item description
         imageURL:
           type: string
           description: Link to the item image
         price:
-          type: float
+          type: number
           description: price of the item
         calories:
           type: integer
@@ -35,9 +35,10 @@ parameters:
           type: string
           description: Type of food the item is
         tags:
-          type: List
+          type: array
+          items:
+            type: string
           description: a list of the keywords that describe the item
-
 responses:
   200:
     description: Success Item Added
