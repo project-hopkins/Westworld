@@ -18,18 +18,13 @@ def get_item_as_object(item):
     }
 
 
-@item_api.route('/item/spec', strict_slashes=False)
-def login_doc():
-    """
-    Documentation for the /item route
-    :return:
-    """
-    return auto.html()
+#@item_api.route('/item/spec', strict_slashes=False)
 
 
 @item_api.route('/item', strict_slashes=False, methods=['GET'])
 def get_all_items() -> dict:
     """
+    swagger_from_file: ../swagger/item/getItems.yml
     returns all the items as a json array
     :return:
     """
@@ -46,6 +41,11 @@ def get_all_items() -> dict:
 
 @item_api.route('/item/id/<item_id>', strict_slashes=False, methods=['GET'])
 def get_item_by_id(item_id) -> tuple:
+    """
+    swagger_from_file: ../swagger/item/getItem.yml
+    returns one item as a json array
+    :return:
+    """
     from hopkin.models.items import Item
     # find specific item
     item = Item.query.filter(Item.mongo_id == item_id).first()
@@ -55,6 +55,11 @@ def get_item_by_id(item_id) -> tuple:
 
 @item_api.route('/item/category/<category>', strict_slashes=False, methods=['GET'])
 def get_item_by_category(category) -> tuple:
+    """
+    swagger_from_file: ../swagger/item/getItemsByCat.yml
+    returns all the items in a category as a json array
+    :return:
+    """
     from hopkin.models.items import Item
     # find items by category
     items = Item.query.filter(Item.category == category)
@@ -69,7 +74,9 @@ def get_item_by_category(category) -> tuple:
 @item_api.route('/item/category/<category>/count', strict_slashes=False, methods=['GET'])
 def get_category_count(category) -> tuple:
     """
-    Returns the number items in that category 
+    swagger_from_file: ../swagger/item/getNumItemsInCat.yml
+    Returns the number items in that category
+
     :param category: 
     :return: 
     """
@@ -80,6 +87,7 @@ def get_category_count(category) -> tuple:
 @item_api.route('/item/search', strict_slashes=False, methods=['GET'])
 def search_item() -> tuple:
     """
+    swagger_from_file: ../swagger/item/searchItem.yml
     Searches items if query less that 3 
     it only searches the name else it will
     search the names and tags
@@ -118,6 +126,11 @@ def search_item() -> tuple:
 
 @item_api.route('/admin/item/add', strict_slashes=False, methods=['POST'])
 def add_new_item() -> tuple:
+    """
+    swagger_from_file: ../swagger/item/itemAdd.yml
+    adds an item to the database and returns it in a JSON object
+    :return:
+    """
     from hopkin.models.items import Item
     if request.json is not None and g.is_admin:
         new_item = Item(
@@ -138,6 +151,11 @@ def add_new_item() -> tuple:
 
 @item_api.route('/admin/item/delete/<item_id>', strict_slashes=False, methods=['POST'])
 def delete_item(item_id):
+    """
+    swagger_from_file: ../swagger/item/deleteItem.yml
+    deletes the selected item from the database
+    :return:
+    """
     from hopkin.models.items import Item
     # search for item by id
     item = Item.query.get(str(item_id))
@@ -151,6 +169,11 @@ def delete_item(item_id):
 
 @item_api.route('/admin/item/update', strict_slashes=False, methods=['POST'])
 def update_item():
+    """
+    swagger_from_file: ../swagger/item/updateItem.yml
+    updated the selected item in the database
+    :return:
+    """
     from hopkin.models.items import Item
 
     if request.json is not None:
