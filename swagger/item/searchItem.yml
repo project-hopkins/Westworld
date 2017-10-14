@@ -1,0 +1,27 @@
+Searchs the database for item
+---
+tags:
+  - searchItems
+definitions:
+  - schema:
+      id: SearchItemsResponse
+      properties:
+        name:
+         type: list
+         description: List of all the items with the search term
+parameters:
+  - in: query
+      name: items
+        schema:
+          type: list
+          required: true
+
+responses:
+  200:
+    description: JWT Object List
+    schema:
+      type: objectList
+      items:
+        $ref: '#/definitions/SearchItemsResponse'
+  403:
+    description: error no search results provided
