@@ -1,4 +1,4 @@
-Adds a new item to the database
+Gets all items from the database
 ---
 tags:
   - getItems
@@ -9,13 +9,12 @@ definitions:
         name:
          type: list
          description: List of all the items
-get:
-  parameters:
-     - in: query
-        name: items
-          schema:
-            type: list
-            required: true
+parameters:
+  - in: query
+      name: items
+        schema:
+          type: list
+          required: true
 
 responses:
   200:

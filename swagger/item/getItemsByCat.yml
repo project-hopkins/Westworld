@@ -1,0 +1,27 @@
+Gets all items from the database based on category
+---
+tags:
+  - getItemsByCat
+definitions:
+  - schema:
+      id: GetItemsByCatResponse
+      properties:
+        name:
+         type: string
+         description: full items object list
+parameters:
+   - in: query
+      name: category
+        schema:
+          type: objectList
+          required: true
+
+responses:
+  200:
+    description: JWT ObjectList
+    schema:
+      type: objectList
+      items:
+        $ref: '#/definitions/GetItemByCatResponse'
+  403:
+    description: error

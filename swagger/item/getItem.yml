@@ -1,0 +1,27 @@
+Gets one item from the database
+---
+tags:
+  - getItem
+definitions:
+  - schema:
+      id: GetItemResponse
+      properties:
+        name:
+         type: string
+         description: full item object
+parameters:
+  - in: query
+      name: item
+        schema:
+          type: object
+          required: true
+
+responses:
+  200:
+    description: JWT Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetItemResponse'
+  403:
+    description: error
