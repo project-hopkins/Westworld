@@ -14,8 +14,8 @@ parameters:
 #    name: token
 #    description: JWT Object
 #    type: object
-  - in: query
-      name:
+  - in: body
+      #name:
         type: string
         description: item
         schema:

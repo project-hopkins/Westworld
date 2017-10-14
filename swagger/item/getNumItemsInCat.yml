@@ -10,8 +10,8 @@ definitions:
          type: int
          description: number of items in a category
 parameters:
-   - in: query
-      name: category
+   - in: body
+      #name: category
         schema:
           type: integer
           required: true

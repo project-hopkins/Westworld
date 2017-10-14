@@ -15,8 +15,10 @@ parameters:
 #    name: token
 #    description: JWT Object
 #    type: object
-  - in: query
-      name: items
+  - in: body
+     # name:
+      type: query
+      description: items
         schema:
           type: list
           required: true

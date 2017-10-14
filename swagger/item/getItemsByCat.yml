@@ -10,8 +10,9 @@ definitions:
          type: string
          description: full items object list
 parameters:
-   - in: query
-      name: category
+   - in: body
+      type: query
+      #name: category
         schema:
           type: objectList
           required: true

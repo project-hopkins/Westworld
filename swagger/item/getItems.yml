@@ -10,9 +10,9 @@ definitions:
          type: list
          description: List of all the items
 parameters:
-  - in: query
-      name:
-        type: string
+  - in: body
+      #name:
+        type: query
         description: item
         schema:
           type: list

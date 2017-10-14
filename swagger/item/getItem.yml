@@ -10,8 +10,8 @@ definitions:
          type: string
          description: full item object
 parameters:
-  - in: query
-      name:
+  - in: body
+     # name:
         type: string
         description: item
         schema:

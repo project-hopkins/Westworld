@@ -10,13 +10,13 @@ definitions:
          type: list
          description: List of all the items with the search term
 parameters:
-  - in: query
-      name:
-        type: string
-        description: item
-        schema:
-          type: list
-          required: true
+  - in: body
+     # name:
+      type: string
+      description: item
+      schema:
+        type: list
+        required: true
 
 responses:
   200:
