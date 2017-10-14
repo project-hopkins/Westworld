@@ -18,15 +18,6 @@ def get_item_as_object(item):
     }
 
 
-@item_api.route('/item/spec', strict_slashes=False)
-def login_doc():
-    """
-    Documentation for the /item route
-    :return:
-    """
-    return auto.html()
-
-
 @item_api.route('/item', strict_slashes=False, methods=['GET'])
 def get_all_items() -> dict:
     """

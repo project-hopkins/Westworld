@@ -1,0 +1,14 @@
+Gets a customers profile info with token
+---
+tags:
+  - customer
+definitions:
+  - schema:
+      id: Userinfo
+      properties:
+        name:
+         type: string
+         description: all information about user
+responses:
+  201:
+    description: User created
