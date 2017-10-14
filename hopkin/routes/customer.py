@@ -43,7 +43,6 @@ def customer_profile_info() -> dict:
 
     user_info = {
         'username': request['username'],
-        'password': request['password'],
         'displayName': {
             'firstName': request['displayName']['firstName'],
             'lastName': request['displayName']['lastName']
@@ -52,7 +51,7 @@ def customer_profile_info() -> dict:
         'paymentInfo': {
             'name': request['paymentInfo']['name'],
             'cardType': request['paymentInfo']['cardType'],
-            'num': int(request['paymentInfo']['num']),
+            'num': request['paymentInfo']['num'],
             'expiry': request['paymentInfo']['expiry']
         },
         'address': {
