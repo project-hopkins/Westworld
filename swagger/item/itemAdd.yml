@@ -1,0 +1,42 @@
+Adds a new item to the database
+---
+tags:
+  - addItem
+
+parameters:
+  - in: body
+    name: itemObject
+    schema:
+      id: Items
+      properties:
+        name:
+          type: string
+          description: item name
+        description:
+          type: string
+          description: item description
+        imageURL:
+          type: string
+          description: Link to the item image
+        price:
+          type: float
+          description: price of the item
+        calories:
+          type: integer
+          description: how many calories are in the item
+        category:
+          type: string
+          description: Type of food the item is
+        tags:
+          type: List
+          description: a list of the keywords that describe the item
+
+responses:
+  200:
+    description: JWT Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/item'
+  403:
+    description: error invalid item
