@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import jwt
 import datetime
 from werkzeug.security import check_password_hash, generate_password_hash
