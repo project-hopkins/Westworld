@@ -1,7 +1,7 @@
-#Gets one item from the database
+Gets one item from the database by id in the path
 ---
 tags:
-  - getItem
+  - item
 definitions:
   - schema:
       id: GetItemResponse
@@ -10,44 +10,10 @@ definitions:
          type: string
          description: full item object
 parameters:
-  - in: query
-    description: retrieve single item
-    schema:
-      type: array
-      items:
-        type: object
-        properties:
-          name:
-            type: string
-            description: item name
-          itemDescription:
-            type: string
-            description: item description
-          imageURL:
-            type: string
-            description: Link to the item image
-           price:
-            type: number
-            description: price of the item
-          calories:
-            type: integer
-            description: how many calories are in the item
-          category:
-            type: string
-            description: Type of food the item is
-          tags:
-            type: array
-            items:
-              type: string
-            description: a list of the keywords that describe the item
-      required: true
-#  - in: body
-#     # name:
-#        type: string
-#        description: item
-#        schema:
-#          type: object
-#          required: true
+  - in: path
+    name: item_id
+    type: string
+    required: true
 responses:
   200:
     description: Item Object

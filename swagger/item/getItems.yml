@@ -1,60 +1,18 @@
 #Gets all items from the database
 ---
 tags:
-  - getItems
+  - item
 definitions:
   - schema:
       id: GetItemsResponse
       properties:
         name:
-         type: list
+         type: object
          description: List of all the items
-parameters:
-  - in: body
-    type: query
-    description: item
-    schema:
-      type: array
-      items:
-        type: object
-        properties:
-          name:
-            type: string
-            description: item name
-          itemDescription:
-            type: string
-            description: item description
-          imageURL:
-            type: string
-            description: Link to the item image
-           price:
-            type: number
-            description: price of the item
-          calories:
-            type: integer
-            description: how many calories are in the item
-          category:
-            type: string
-            description: Type of food the item is
-          tags:
-            type: array
-            items:
-              type: string
-            description: a list of the keywords that describe the item
-      required: true
-#  - in: body
-#      #name:
-#        type: query
-#        description: item
-#        schema:
-#          type: list
-#          required: true
 responses:
   200:
     description: Item Object List
     schema:
-      type: List
+      type: object
       items:
         $ref: '#/definitions/GetItemsResponse'
-  403:
-    description: error
