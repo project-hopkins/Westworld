@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import json
 from flask import Blueprint, jsonify, request, g
 
@@ -17,10 +16,12 @@ def get_item_as_object(item):
         "tags": item['tags']
     }
 
+
 @item_api.route('/item', strict_slashes=False, methods=['GET'])
-def get_all_items() -> dict:
+def get_all_items() -> tuple:
     """
     swagger_from_file: ../swagger/item/getItems.yml
+
     returns all the items as a json array
     :return:
     """
@@ -39,6 +40,7 @@ def get_all_items() -> dict:
 def get_item_by_id(item_id) -> tuple:
     """
     swagger_from_file: ../swagger/item/getItem.yml
+
     returns one item as a json array
     :return:
     """
@@ -52,7 +54,8 @@ def get_item_by_id(item_id) -> tuple:
 @item_api.route('/item/category/<category>', strict_slashes=False, methods=['GET'])
 def get_item_by_category(category) -> tuple:
     """
-    swagger_from_file: ../swagger/item/getItemsByCat.yml
+    swagger_from_file: ../swagger/item/getItemsByCategory.yml
+
     returns all the items in a category as a json array
     :return:
     """
@@ -70,7 +73,7 @@ def get_item_by_category(category) -> tuple:
 @item_api.route('/item/category/<category>/count', strict_slashes=False, methods=['GET'])
 def get_category_count(category) -> tuple:
     """
-    swagger_from_file: ../swagger/item/getNumItemsInCat.yml
+    ssswagger_from_file: ../swagger/item/getNumItemsInCat.yml
     Returns the number items in that category
 
     :param category: 
@@ -83,7 +86,7 @@ def get_category_count(category) -> tuple:
 @item_api.route('/item/search', strict_slashes=False, methods=['GET'])
 def search_item() -> tuple:
     """
-    swagger_from_file: ../swagger/item/searchItem.yml
+    ssswagger_from_file: ../swagger/item/searchItem.yml
     Searches items if query less that 3 
     it only searches the name else it will
     search the names and tags
@@ -123,7 +126,7 @@ def search_item() -> tuple:
 @item_api.route('/admin/item/add', strict_slashes=False, methods=['POST'])
 def add_new_item() -> tuple:
     """
-    swagger_from_file: ../swagger/item/itemAdd.yml
+    ssswagger_from_file: ../swagger/item/itemAdd.yml
     adds an item to the database and returns it in a JSON object
     :return:
     """
@@ -149,7 +152,7 @@ def add_new_item() -> tuple:
 @item_api.route('/admin/item/delete/<item_id>', strict_slashes=False, methods=['POST'])
 def delete_item(item_id):
     """
-    swagger_from_file: ../swagger/item/deleteItem.yml
+    ssswagger_from_file: ../swagger/item/deleteItem.yml
     deletes the selected item from the database
     :return:
     """
@@ -167,7 +170,7 @@ def delete_item(item_id):
 @item_api.route('/admin/item/update', strict_slashes=False, methods=['POST'])
 def update_item():
     """
-    swagger_from_file: ../swagger/item/updateItem.yml
+    ssswagger_from_file: ../swagger/item/updateItem.yml
     updated the selected item in the database
     :return:
     """
