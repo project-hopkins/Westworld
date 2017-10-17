@@ -73,7 +73,7 @@ def get_item_by_category(category) -> tuple:
 @item_api.route('/item/category/<category>/count', strict_slashes=False, methods=['GET'])
 def get_category_count(category) -> tuple:
     """
-    ssswagger_from_file: ../swagger/item/getNumItemsInCat.yml
+    swagger_from_file: ../swagger/item/getNumItemsInCat.yml
     Returns the number items in that category
 
     :param category: 

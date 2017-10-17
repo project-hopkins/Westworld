@@ -7,25 +7,13 @@ definitions:
       id: GetNumItemsInCat
       properties:
         name:
-         type: int
+         type: integer
          description: number of items in a category
 parameters:
-  - in: query
-    description: item
-    schema:
-      type: int
-      required: true
-#   - in: body
-#      #name: category
-#        schema:
-#          type: integer
-#          required: true
+  - in: path
+    name: category
+    type: string
+    required: true
 responses:
   200:
     description: integer
-    schema:
-      type: int
-      items:
-        $ref: '#/definitions/GetNumItemsInCatResponse'
-  403:
-    description: error
