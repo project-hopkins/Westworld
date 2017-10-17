@@ -86,7 +86,7 @@ def get_category_count(category) -> tuple:
 @item_api.route('/item/search', strict_slashes=False, methods=['GET'])
 def search_item() -> tuple:
     """
-    ssswagger_from_file: ../swagger/item/searchItem.yml
+    swagger_from_file: ../swagger/item/searchItem.yml
     Searches items if query less that 3 
     it only searches the name else it will
     search the names and tags

@@ -1,59 +1,18 @@
 #Searchs the database for item
 ---
 tags:
-  - searchItems
+  - searchItem
 definitions:
   - schema:
       id: SearchItemsResponse
       properties:
         name:
-         type: list
-         description: List of all the items with the search term
-parameters:
-  - in: query
-    description: item
-    schema:
-      type: array
-      items:
-        type: object
-        properties:
-           name:
-             type: string
-             description: item name
-           itemDescription:
-             type: string
-             description: item description
-           imageURL:
-             type: string
-             description: Link to the item image
-            price:
-             type: number
-             description: price of the item
-           calories:
-             type: integer
-             description: how many calories are in the item
-           category:
-             type: string
-             description: Type of food the item is
-           tags:
-             type: array
-             items:
-               type: string
-             description: a list of the keywords that describe the item
-      required: true
-#  - in: body
-#     # name:
-#      type: string
-#      description: item
-#      schema:
-#        type: list
-#        required: true
+         type: object
+         description: List of all the items searched
 responses:
   200:
     description: Item Object List
     schema:
-      type: objectList
+      type: object
       items:
         $ref: '#/definitions/SearchItemsResponse'
-  403:
-    description: error no search results provided
