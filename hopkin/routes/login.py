@@ -77,10 +77,6 @@ def login() -> tuple:
         if not check_password_hash(user['password'], password):
             return jsonify({'error': 'wrong username or password'}), 403
 
-    # TODO check if user has token
-    # if token return token
-    # else gen new token
-
     if hasattr(user, 'token'):
         jwt_token = user['token']
     else:

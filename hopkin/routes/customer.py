@@ -7,6 +7,9 @@ customer_api = Blueprint('customer_api', __name__)
 @customer_api.route('/customer/payment', strict_slashes=False, methods=['GET'])
 def customer_payment_info() -> dict:
     """
+
+    swagger_from_file: ../swagger/customer/paymentInfo.yml
+
     Gets a customers payment info
     """
     from hopkin.models.users import User
@@ -29,6 +32,9 @@ def customer_payment_info() -> dict:
 @customer_api.route('/customer/profile', strict_slashes=False, methods=['GET'])
 def customer_profile_info() -> dict:
     """
+
+    swagger_from_file: ../swagger/customer/profile.yml
+
     Gets a customers profile info
     :return:
     """
@@ -37,7 +43,6 @@ def customer_profile_info() -> dict:
 
     user_info = {
         'username': request['username'],
-        'password': request['password'],
         'displayName': {
             'firstName': request['displayName']['firstName'],
             'lastName': request['displayName']['lastName']
@@ -46,7 +51,7 @@ def customer_profile_info() -> dict:
         'paymentInfo': {
             'name': request['paymentInfo']['name'],
             'cardType': request['paymentInfo']['cardType'],
-            'num': int(request['paymentInfo']['num']),
+            'num': request['paymentInfo']['num'],
             'expiry': request['paymentInfo']['expiry']
         },
         'address': {
@@ -64,7 +69,14 @@ def customer_profile_info() -> dict:
 
 
 @customer_api.route('/customer/profile/edit', strict_slashes=False, methods=['POST'])
-def customer_profile_update() -> dict:
+def customer_profile_update() -> tuple:
+    """
+
+    swagger_from_file: ../swagger/customer/profile.yml
+
+    Gets a customers profile info
+    :return:
+    """
     if request.json is not None:
 
         from hopkin.models.users import User
@@ -98,4 +110,4 @@ def customer_profile_update() -> dict:
 
         return jsonify({'data': {'user': user_update}})
     else:
-        return jsonify({'error': 'user not updated'})
+        return jsonify({'error': 'user not updated'}), 400
