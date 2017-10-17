@@ -10,6 +10,9 @@ order_api = Blueprint('orderApi', __name__)
 @order_api.route('/order', strict_slashes=False, methods=['GET'])
 def get_user_orders() -> dict:
     """
+
+    swagger_from_file: ../swagger/orders/userOrders.yml
+
     returns all the orders for user as a json array
     :return:
     """

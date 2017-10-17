@@ -1,0 +1,30 @@
+Get the users orders. User is set by token in header
+---
+tags:
+  - order
+definitions:
+  - schema:
+      id: LoginResponse
+      properties:
+        name:
+         type: string
+         description: the users JWT
+      properties:
+        name:
+         type: string
+         description: If the user has admin rights
+parameters:
+  - in: header
+    name: token
+    description: user token
+    type: string
+    required: true
+responses:
+  200:
+    description: JWT Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/LoginResponse'
+  403:
+    description: error with username or password
