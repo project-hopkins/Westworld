@@ -152,7 +152,7 @@ def add_new_item() -> tuple:
 @item_api.route('/admin/item/delete/<item_id>', strict_slashes=False, methods=['POST'])
 def delete_item(item_id):
     """
-    ssswagger_from_file: ../swagger/item/deleteItem.yml
+    swagger_from_file: ../swagger/item/deleteItem.yml
     deletes the selected item from the database
     :return:
     """

@@ -10,25 +10,12 @@ definitions:
          type: string
          description: delete an item
 parameters:
-#  - in: header
-#    name: token
-#    description: JWT Object
-#    type: object
-  - in: query
-    description: item
-#  - in: body
-#      #name:
-#        type: string
-#        description: item
-#        schema:
-#          type: list
-#          required: true
+  - in: path
+    name: item_id
+    type: string
+    required: true
 responses:
   200:
-    description: success true
-    schema:
-      type: string
-      items:
-        $ref: '#/definitions/DeleteItemResponse'
-  403:
-    description: error No item found with that id
+    description: Success True
+
+
