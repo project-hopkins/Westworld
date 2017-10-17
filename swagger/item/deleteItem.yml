@@ -1,7 +1,7 @@
-#Delete Item from the database
+Delete Item from the database
 ---
 tags:
-  - deleteItem
+  - item
 definitions:
   - schema:
       id: DeleteItemResponse
@@ -17,5 +17,3 @@ parameters:
 responses:
   200:
     description: Success True
-
-

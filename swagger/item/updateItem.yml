@@ -1,7 +1,7 @@
-#Adds a new item to the database
+Adds a new item to the database
 ---
 tags:
-  - updateItem
+  - item
 definitions:
   - schema:
       id: UpdateItemResponse

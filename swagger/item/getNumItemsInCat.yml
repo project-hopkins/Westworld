@@ -1,7 +1,7 @@
-#Gets the number of items in a category
+Gets the number of items in a category
 ---
 tags:
-  - getNumItemsInCat
+  - item
 definitions:
   - schema:
       id: GetNumItemsInCat

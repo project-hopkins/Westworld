@@ -1,7 +1,7 @@
-#Searchs the database for item
+Searchs the database for item
 ---
 tags:
-  - searchItem
+  - item
 definitions:
   - schema:
       id: SearchItemsResponse
