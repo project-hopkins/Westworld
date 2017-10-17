@@ -9,42 +9,6 @@ definitions:
         name:
          type: string
          description: Success Item Updated
-parameters:
-#  - in: body
-#     # name:
-#      type: query
-#      description: items
-#        schema:
-#          type: list
-#          required: true
-  - in: query
-    name: itemObject
-    schema:
-      id: Items
-      properties:
-         name:
-           type: string
-           description: item name
-         description:
-           type: string
-           description: item description
-         imageURL:
-           type: string
-           description: Link to the item image
-         price:
-           type: number
-           description: price of the item
-         calories:
-           type: integer
-           description: how many calories are in the item
-         category:
-           type: string
-           description: Type of food the item is
-         tags:
-           type: array
-           items:
-             type: string
-           description: a list of the keywords that describe the item
 responses:
   200:
     description: Success Item Updated
@@ -52,5 +16,3 @@ responses:
       type: string
       items:
         $ref: '#/definitions/UpdateItemResponse'
-  403:
-    description: error item not updated

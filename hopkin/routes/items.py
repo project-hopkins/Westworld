@@ -170,7 +170,7 @@ def delete_item(item_id):
 @item_api.route('/admin/item/update', strict_slashes=False, methods=['POST'])
 def update_item():
     """
-    ssswagger_from_file: ../swagger/item/updateItem.yml
+    swagger_from_file: ../swagger/item/updateItem.yml
     updated the selected item in the database
     :return:
     """
