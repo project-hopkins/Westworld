@@ -126,7 +126,7 @@ def search_item() -> tuple:
 @item_api.route('/admin/item/add', strict_slashes=False, methods=['POST'])
 def add_new_item() -> tuple:
     """
-    ssswagger_from_file: ../swagger/item/itemAdd.yml
+    swagger_from_file: ../swagger/item/itemAdd.yml
     adds an item to the database and returns it in a JSON object
     :return:
     """
