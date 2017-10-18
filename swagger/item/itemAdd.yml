@@ -9,6 +9,11 @@ definitions:
         name:
          type: string
          description: full item object
+parameters:
+  - in: path
+    name: item_object
+    type: object
+    required: true
 responses:
   200:
     description: Item Object
