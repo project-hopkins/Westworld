@@ -1,0 +1,25 @@
+Gets one item from the database by id in the path
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: GetItemResponse
+      properties:
+        name:
+         type: string
+         description: full item object
+parameters:
+  - in: path
+    name: item_id
+    type: string
+    required: true
+responses:
+  200:
+    description: Item Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetItemResponse'
+  403:
+    description: error

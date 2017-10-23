@@ -1,0 +1,18 @@
+Searchs the database for item
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: SearchItemsResponse
+      properties:
+        name:
+         type: object
+         description: List of all the items searched
+responses:
+  200:
+    description: Item Object List
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/SearchItemsResponse'

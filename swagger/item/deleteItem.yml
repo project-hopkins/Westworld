@@ -1,0 +1,19 @@
+Delete Item from the database
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: DeleteItemResponse
+      properties:
+        name:
+         type: string
+         description: delete an item
+parameters:
+  - in: path
+    name: item_id
+    type: string
+    required: true
+responses:
+  200:
+    description: Success True

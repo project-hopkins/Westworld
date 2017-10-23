@@ -1,0 +1,19 @@
+Gets the number of items in a category
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: GetNumItemsInCat
+      properties:
+        name:
+         type: integer
+         description: number of items in a category
+parameters:
+  - in: path
+    name: category
+    type: string
+    required: true
+responses:
+  200:
+    description: integer
