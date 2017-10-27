@@ -22,7 +22,7 @@ def customer_payment_info() -> dict:
                 {
                     'name': payment_info['name'],
                     'cardType': payment_info['cardType'],
-                    'num': payment_info['num'],
+                    'num': ('*'*12) + str(payment_info['num'])[12:],
                     'expiry': payment_info['expiry']
                 }
         }
@@ -51,7 +51,6 @@ def customer_profile_info() -> dict:
         'paymentInfo': {
             'name': request['paymentInfo']['name'],
             'cardType': request['paymentInfo']['cardType'],
-            'num': request['paymentInfo']['num'],
             'expiry': request['paymentInfo']['expiry']
         },
         'address': {
