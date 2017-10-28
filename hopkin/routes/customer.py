@@ -4,6 +4,10 @@ import datetime
 customer_api = Blueprint('customer_api', __name__)
 
 
+def get_cc_number(cc_number: int):
+    return '*'*12 + str(cc_number)[12:]
+
+
 @customer_api.route('/customer/payment', strict_slashes=False, methods=['GET'])
 def customer_payment_info() -> dict:
     """
@@ -22,7 +26,7 @@ def customer_payment_info() -> dict:
                 {
                     'name': payment_info['name'],
                     'cardType': payment_info['cardType'],
-                    'num': ('*'*12) + str(payment_info['num'])[12:],
+                    'num': get_cc_number(payment_info['num']),
                     'expiry': payment_info['expiry']
                 }
         }
@@ -51,7 +55,7 @@ def customer_profile_info() -> dict:
         'paymentInfo': {
             'name': request['paymentInfo']['name'],
             'cardType': request['paymentInfo']['cardType'],
-            'num': ('*'*12) + str(request['num'])[12:],
+            'num': get_cc_number(request['num']),
             'expiry': request['paymentInfo']['expiry']
         },
         'address': {
