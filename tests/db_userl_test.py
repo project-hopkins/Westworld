@@ -47,4 +47,4 @@ class TestDB(unittest.TestCase):
             User.save(new_user)
             found_user = User.get_by_email(new_user['email'])
             self.assertEqual(new_user['email'], found_user['email'], "User emails not equal")
-            User.remove(new_user)
+            User.remove(new_user['email'])

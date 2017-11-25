@@ -1,3 +1,4 @@
+import copy
 from hopkin.app import flask_db
 from bson.objectid import ObjectId
 
@@ -43,7 +44,8 @@ class Item:
 
     @staticmethod
     def save(item):
-        flask_db.db[Item.collection_name].save(item)
+        item_to_save = copy.deepcopy(item)
+        flask_db.db[Item.collection_name].save(item_to_save)
 
     @staticmethod
     def remove(item_id):

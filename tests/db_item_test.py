@@ -38,4 +38,4 @@ class TestItems(unittest.TestCase):
             Item.save(new_item)
             found_item = Item.get_by_name(new_item['name'])
             self.assertEqual(new_item['name'], found_item['name'], "Items not equal")
-            Item.remove(new_item)
+            Item.remove(found_item['_id'])
