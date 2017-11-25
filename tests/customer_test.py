@@ -81,6 +81,6 @@ class TestCustomerInfo(unittest.TestCase):
         data = '{"address": {"name": "Main", "number": 123, "postalCode": "M3E5R1", "streetType": "Street"}, ' \
                '"adminRights": false, "displayName": {"firstName": "Aaron", "lastName": "Smith"}, ' \
                '"email": "example@example.com", "password": "smith", "paymentInfo": {"cardType": "VISA", ' \
-               '"expiry": "1/1/17 12:00:00 AM UTC", "name": "steve Smith", "num": 451535486}, "username": "steve"}'
+               '"expiry": "1/1/17 12:00:00 AM UTC", "name": "steve Smith", "num": 1234567890123456}, "username": "steve"}'
         result = self.app.post('/login/register', data=data, content_type='application/json')
         return json.loads(result.data)

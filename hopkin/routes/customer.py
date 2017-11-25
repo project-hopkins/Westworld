@@ -55,7 +55,7 @@ def customer_profile_info() -> dict:
         'paymentInfo': {
             'name': request['paymentInfo']['name'],
             'cardType': request['paymentInfo']['cardType'],
-            'num': get_cc_number(request['num']),
+            'num': get_cc_number(request['paymentInfo']['num']),
             'expiry': request['paymentInfo']['expiry']
         },
         'address': {
