@@ -10,7 +10,7 @@ class Restaurant:
 
     @staticmethod
     def get_by_id(restaurant_id):
-        return flask_db.db[Restaurant.collection_name].find_one({'_id': restaurant_id})
+        return flask_db.db[Restaurant.collection_name].find_one({'_id': ObjectId(restaurant_id)})
 
     @staticmethod
     def insert(new_restaurant):
