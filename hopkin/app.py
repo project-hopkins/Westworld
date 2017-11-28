@@ -36,7 +36,7 @@ def before_request() -> tuple:
         flask_app.logger.log(10, 'Body: %s', request.get_data())
 
         from hopkin.models.users import User
-        no_auth_paths = ['/spec', '/favicon.ico', '/item', '/login']
+        no_auth_paths = ['/spec', '/favicon.ico', '/item', '/login', '/restaurant']
         auth_required = True
         for path in no_auth_paths:
             if request.path.startswith(path):

@@ -9,17 +9,17 @@ def get_restaurant_as_object(restaurant):
         "_id": str(restaurant['_id']),
         "address":
             {
-                'streetNumber': restaurant['streetNum'],
-                'streetName': restaurant['streetName'],
-                'city': restaurant['city'],
-                'province': restaurant['province'],
-                'postalCode': restaurant['postalCode']
+                'streetNumber': restaurant['address']['streetNumber'],
+                'streetName': restaurant['address']['streetName'],
+                'city': restaurant['address']['city'],
+                'province': restaurant['address']['province'],
+                'postalCode': restaurant['address']['postalCode']
 
             },
         'location':
             {
-                'longitude': restaurant['longitude'],
-                'latitude': restaurant['latitude']
+                'longitude': restaurant['location']['longitude'],
+                'latitude': restaurant['location']['latitude']
             }
 
     }
@@ -35,7 +35,7 @@ def get_all_restaurants() -> tuple:
     """
     from hopkin.models.restaurants import Restaurant
     # get all restaurant
-    restaurants = Restaurant.get_all()
+    restaurants = Restaurant.get_all().find()
     # create restaurant list
     restaurants_list = []
     # create response
