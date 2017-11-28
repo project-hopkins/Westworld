@@ -25,7 +25,7 @@ class User:
     def save(user):
         flask_db.db[User.collection_name].save(user)
 
-    # Shouldn't be user in production. Only for testing purposes
+    # Shouldn't be used in production. Only for testing purposes
     @staticmethod
     def remove(user_email):
         flask_db.db[User.collection_name].delete_one({'email': user_email})
