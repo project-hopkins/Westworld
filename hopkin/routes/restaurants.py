@@ -62,7 +62,7 @@ def get_restaurant_by_id(restaurant_id) -> tuple:
 @restaurant_api.route('/admin/restaurant/add', strict_slashes=False, methods=['POST'])
 def add_new_restaurant() -> tuple:
     """
-    sswagger_from_file: ../swagger/restaurant/restaurantAdd.yml
+    swagger_from_file: ../swagger/restaurant/addRestaurant.yml
     adds an restaurant to the database and returns it in a JSON object
     :return:
     """
