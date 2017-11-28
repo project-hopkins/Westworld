@@ -1,0 +1,18 @@
+Gets all restaurants from the database
+---
+tags:
+  - restaurant
+definitions:
+  - schema:
+      id: GetRestaurantsResponse
+      properties:
+        name:
+         type: object
+         description: List of all the restaurant
+responses:
+  200:
+    description: Restaurant Object List
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetRestaurantsResponse'
