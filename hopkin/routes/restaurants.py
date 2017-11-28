@@ -47,7 +47,7 @@ def get_all_restaurants() -> tuple:
 @restaurant_api.route('/restaurant/id/<restaurant_id>', strict_slashes=False, methods=['GET'])
 def get_restaurant_by_id(restaurant_id) -> tuple:
     """
-    sswagger_from_file: ../swagger/restaurant/getRestaurant.yml
+    swagger_from_file: ../swagger/restaurant/getRestaurantbyId.yml
 
     returns one restaurant as a json array
     :return:
