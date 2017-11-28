@@ -2,7 +2,7 @@ from hopkin.app import flask_db
 from bson.objectid import ObjectId
 
 class Restaurant:
-    collection_name = 'restaurants'
+    collection_name = 'restaurant'
 
     @staticmethod
     def get_all():

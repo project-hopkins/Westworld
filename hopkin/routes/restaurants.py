@@ -25,23 +25,23 @@ def get_restaurant_as_object(restaurant):
     }
 
 
-@restaurant_api.route('/restaurants', strict_slashes=False, methods=['GET'])
+@restaurant_api.route('/restaurant', strict_slashes=False, methods=['GET'])
 def get_all_restaurants() -> tuple:
     """
-    sswagger_from_file: ../swagger/restaurant/getRestuarants.yml
+    swagger_from_file: ../swagger/restaurant/getRestaurants.yml
 
-    returns all the restaurants as a json array
+    returns all the restaurant as a json array
     :return:
     """
     from hopkin.models.restaurants import Restaurant
-    # get all restaurants
+    # get all restaurant
     restaurants = Restaurant.get_all()
-    # create restaurants list
+    # create restaurant list
     restaurants_list = []
     # create response
     for restaurant in restaurants:
         restaurants_list.append(get_restaurant_as_object(restaurant))
-    return jsonify({'data': {'restaurants': restaurants_list}})
+    return jsonify({'data': {'restaurant': restaurants_list}})
 
 
 @restaurant_api.route('/restaurant/id/<restaurant_id>', strict_slashes=False, methods=['GET'])
