@@ -1,7 +1,6 @@
 import unittest
 import json
-from bson.objectid import ObjectId
-import copy
+
 from hopkin.app import flask_app
 from hopkin.models.restaurants import Restaurant
 from hopkin.models.users import User
@@ -63,28 +62,27 @@ class TestRestaurantRoute(unittest.TestCase):
         self.assertFalse(self.app is None)
 
     def test_get_all_restaurants(self):
-        restaurant_1 = self.__add_restaurant(self.__test_restaurant_data_1)
-        restaurant_2 = self.__add_restaurant(self.__test_restaurant_data_2)
+        restaurant_1_id = self.__add_restaurant(self.__test_restaurant_data_1)
+        restaurant_2_id = self.__add_restaurant(self.__test_restaurant_data_2)
 
         result = self.app.get('/restaurant')
         json_data = json.loads(result.data)
         self.assertTrue(len(json_data['data']['restaurant']) >= 2, 'no items in db')
 
         with flask_app.app_context():
-            Restaurant.remove(str(restaurant_1['_id']))
-            Restaurant.remove(str(restaurant_2['_id']))
+
 
     def test_get_restaurant_by_id(self):
-        restaurant = self.__add_restaurant(self.__test_restaurant_data_1)
+        restaurant_id = self.__add_restaurant(self.__test_restaurant_data_1)
 
-        result = self.app.get('/restaurant/id/' + str(restaurant['_id']))
+        result = self.app.get('/restaurant/id/' + str(restaurant_id))
         json_data = json.loads(result.data)
         self.assertTrue(json_data['data']['restaurant'] is not None and
                         json_data['data']['restaurant']['address']['streetName'] == self.__test_restaurant_data_1['address']['streetName'],
                         'no proper restaurant by id found')
 
         with flask_app.app_context():
-            Restaurant.remove(restaurant['_id'])
+            Restaurant.remove(restaurant_id)
 
     def test_admin_add_restaurant(self):
         json_response_reg = self.__register_user(self.__admin_user_data)
@@ -111,23 +109,22 @@ class TestRestaurantRoute(unittest.TestCase):
         admin_token = self.__login_user(json.loads(self.__admin_user_data))
 
         # add an restaurant to delete
-        restaurant = self.__add_restaurant(self.__test_restaurant_data_1)
+        restaurant_id = self.__add_restaurant(self.__test_restaurant_data_1)
 
         result = self.app.post(
-            '/admin/restaurant/delete/' + str(restaurant['_id']),
+            '/admin/restaurant/delete/' + str(restaurant_id),
             headers={'Content-Type': 'application/json', 'token': admin_token},
         )
         json_data = json.loads(result.data)
         self.assertTrue(json_data['data']['success'] is not None, 'fail delete restaurant')
 
         with flask_app.app_context():
-            Restaurant.remove(restaurant['_id'])
+            Restaurant.remove(restaurant_id)
             User.remove(json_response_reg['data']['user']['email'])
 
     def __add_restaurant(self, data):
         with flask_app.app_context():
-            Restaurant.save(data)
-            return Restaurant.get_all()
+            return Restaurant.insert(data)
 
     def __register_user(self, data):
         result = self.app.post('/login/register', data=data, content_type='application/json')
