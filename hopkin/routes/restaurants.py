@@ -97,7 +97,7 @@ def add_new_restaurant() -> tuple:
 @restaurant_api.route('/admin/restaurant/delete/<restaurant_id>', strict_slashes=False, methods=['POST'])
 def delete_restaurant(restaurant_id):
     """
-    sswagger_from_file: ../swagger/restaurant/deleteRestaurant.yml
+    swagger_from_file: ../swagger/restaurant/deleteRestaurant.yml
     deletes the selected restaurant from the database
     :return:
     """
