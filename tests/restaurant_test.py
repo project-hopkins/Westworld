@@ -1,5 +1,6 @@
 import unittest
 import json
+from bson.objectid import ObjectId
 import copy
 from hopkin.app import flask_app
 from hopkin.models.restaurants import Restaurant
@@ -67,11 +68,11 @@ class TestRestaurantRoute(unittest.TestCase):
 
         result = self.app.get('/restaurant')
         json_data = json.loads(result.data)
-        self.assertTrue(len(json_data['data']['restaurants']) >= 2, 'no items in db')
+        self.assertTrue(len(json_data['data']['restaurant']) >= 2, 'no items in db')
 
         with flask_app.app_context():
-            Restaurant.remove(restaurant_1['_id'])
-            Restaurant.remove(restaurant_2['_id'])
+            Restaurant.remove(str(restaurant_1['_id']))
+            Restaurant.remove(str(restaurant_2['_id']))
 
     def test_get_restaurant_by_id(self):
         restaurant = self.__add_restaurant(self.__test_restaurant_data_1)
@@ -105,7 +106,7 @@ class TestRestaurantRoute(unittest.TestCase):
 
         return {'id': json_data['data']['restaurantId'], 'token': admin_token, 'restaurant': json_data['data']['restaurant']}
 
-    def test_admin_del_item(self):
+    def test_admin_del_restaurant(self):
         json_response_reg = self.__register_user(self.__admin_user_data)
         admin_token = self.__login_user(json.loads(self.__admin_user_data))
 

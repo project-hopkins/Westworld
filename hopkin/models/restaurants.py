@@ -11,7 +11,7 @@ class Restaurant:
 
     @staticmethod
     def get_by_id(restaurant_id):
-        return flask_db.db[Restaurant.collection_name].find_one({'_id': ObjectId(restaurant_id)})
+        return flask_db.db[Restaurant.collection_name].find_one({'_id': str(restaurant_id)})
 
     @staticmethod
     def insert(new_restaurant):
@@ -24,4 +24,4 @@ class Restaurant:
 
     @staticmethod
     def remove(restaurant_id):
-        flask_db.db[Restaurant.collection_name].delete_one({'_id': ObjectId(restaurant_id)})
+        flask_db.db[Restaurant.collection_name].delete_one({'_id': str(restaurant_id)})
