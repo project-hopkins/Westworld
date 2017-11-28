@@ -69,19 +69,19 @@ def add_new_restaurant() -> tuple:
     from hopkin.models.restaurants import Restaurant
     if request.json is not None and g.is_admin:
         new_restaurant = {
-                "address":
+                'address':
                     {
-                        'streetNumber': request.json['streetNum'],
-                        'streetName': request.json['streetName'],
-                        'city': request.json['city'],
-                        'province': request.json['province'],
-                        'postalCode': request.json['postalCode']
+                        'streetNumber': request.json['address']['streetNumber'],
+                        'streetName': request.json['address']['streetName'],
+                        'city': request.json['address']['city'],
+                        'province': request.json['address']['province'],
+                        'postalCode': request.json['address']['postalCode']
 
                     },
                 'location':
                     {
-                        'longitude': request.json['longitude'],
-                        'latitude': request.json['latitude']
+                        'longitude': request.json['location']['longitude'],
+                        'latitude': request.json['location']['latitude']
                     }
 
 

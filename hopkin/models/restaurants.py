@@ -1,3 +1,4 @@
+import copy
 from hopkin.app import flask_db
 from bson.objectid import ObjectId
 
@@ -15,6 +16,11 @@ class Restaurant:
     @staticmethod
     def insert(new_restaurant):
         return flask_db.db[Restaurant.collection_name].insert_one(new_restaurant).inserted_id
+
+    @staticmethod
+    def save(restaurant):
+        restaurant_to_save = copy.deepcopy(restaurant)
+        flask_db.db[Restaurant.collection_name].save(restaurant_to_save)
 
     @staticmethod
     def remove(restaurant_id):

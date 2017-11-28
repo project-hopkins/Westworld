@@ -38,7 +38,7 @@ class TestRestaurantRoute(unittest.TestCase):
             }
     }
     __admin_user_data = '{"username": "aaron","password": "password","displayName": {"firstName": "Aaron",' \
-                        '"lastName": "Fernandes"},"email": "aaron@example.com","adminRights": true, ' \
+                        '"lastName": "Fernandes"},"email": "aaron4@example.com","adminRights": true, ' \
                         '"paymentInfo": {"name": "Aaron Fernandes","cardType": "VISA","num": 451535486,' \
                         '"expiry": "1/1/17 12:00:00 AM UTC"},"address":{"number": 345,"name": "Fake","streetType": ' \
                         '"Street","postalCode": "M3H5R1"}}'
@@ -62,8 +62,8 @@ class TestRestaurantRoute(unittest.TestCase):
         self.assertFalse(self.app is None)
 
     def test_get_all_restaurants(self):
-        restaurant_1 = self.__add_item(self.__test_restaurant_data_1)
-        restaurant_2 = self.__add_item(self.__test_restaurant_data_2)
+        restaurant_1 = self.__add_restaurant(self.__test_restaurant_data_1)
+        restaurant_2 = self.__add_restaurant(self.__test_restaurant_data_2)
 
         result = self.app.get('/restaurant')
         json_data = json.loads(result.data)
@@ -74,7 +74,7 @@ class TestRestaurantRoute(unittest.TestCase):
             Restaurant.remove(restaurant_2['_id'])
 
     def test_get_restaurant_by_id(self):
-        restaurant = self.__add_item(self.__test_restaurant_data_1)
+        restaurant = self.__add_restaurant(self.__test_restaurant_data_1)
 
         result = self.app.get('/restaurant/id/' + str(restaurant['_id']))
         json_data = json.loads(result.data)
@@ -110,7 +110,7 @@ class TestRestaurantRoute(unittest.TestCase):
         admin_token = self.__login_user(json.loads(self.__admin_user_data))
 
         # add an restaurant to delete
-        restaurant = self.__add_item(self.__test_restaurant_data_1)
+        restaurant = self.__add_restaurant(self.__test_restaurant_data_1)
 
         result = self.app.post(
             '/admin/restaurant/delete/' + str(restaurant['_id']),
