@@ -89,11 +89,10 @@ def add_new_restaurant() -> tuple:
         }
 
         new_restaurant_id = Restaurant.insert(new_restaurant)
-        return jsonify({'data': {'restaurant': request.json, 'restaurantId': str(new_restaurant_id)}})
-
+        toReturn = jsonify({'data': {'restaurant': request.json, 'restaurantId': str(new_restaurant_id)}})
     else:
-        return jsonify({'error': 'invalid restaurant' + request.json}), 403
-
+        toReturn = jsonify({'error': 'invalid restaurant' + request.json}), 403
+    return toReturn
 
 @restaurant_api.route('/admin/restaurant/delete/<restaurant_id>', strict_slashes=False, methods=['POST'])
 def delete_restaurant(restaurant_id):
