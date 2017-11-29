@@ -2,6 +2,7 @@ import copy
 from hopkin.app import flask_db
 from bson.objectid import ObjectId
 
+
 class Restaurant:
     collection_name = 'restaurant'
 

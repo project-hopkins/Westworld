@@ -1,6 +1,6 @@
 import json
+from bson.json_util import dumps
 from flask import Blueprint, jsonify, request, g
-from bson.objectid import ObjectId
 
 restaurant_api = Blueprint('restaurant_Api', __name__)
 
@@ -35,14 +35,10 @@ def get_all_restaurants() -> tuple:
     :return:
     """
     from hopkin.models.restaurants import Restaurant
+
     # get all restaurant
-    restaurants = Restaurant.get_all().find()
-    # create restaurant list
-    restaurants_list = []
-    # create response
-    for restaurant in restaurants:
-        restaurants_list.append(get_restaurant_as_object(restaurant))
-    return jsonify({'data': {'restaurant': restaurants_list}})
+    restaurants = dumps(Restaurant.get_all().find())
+    return jsonify({'data': {'restaurants': json.loads(restaurants)}})
 
 
 @restaurant_api.route('/restaurant/id/<restaurant_id>', strict_slashes=False, methods=['GET'])
@@ -70,29 +66,27 @@ def add_new_restaurant() -> tuple:
     from hopkin.models.restaurants import Restaurant
     if request.json is not None and g.is_admin:
         new_restaurant = {
-                'address':
-                    {
-                        'streetNumber': request.json['address']['streetNumber'],
-                        'streetName': request.json['address']['streetName'],
-                        'city': request.json['address']['city'],
-                        'province': request.json['address']['province'],
-                        'postalCode': request.json['address']['postalCode']
+            'address':
+                {
+                    'streetNumber': request.json['address']['streetNumber'],
+                    'streetName': request.json['address']['streetName'],
+                    'city': request.json['address']['city'],
+                    'province': request.json['address']['province'],
+                    'postalCode': request.json['address']['postalCode']
 
-                    },
-                'location':
-                    {
-                        'longitude': request.json['location']['longitude'],
-                        'latitude': request.json['location']['latitude']
-                    }
-
+                },
+            'location':
+                {
+                    'longitude': request.json['location']['longitude'],
+                    'latitude': request.json['location']['latitude']
+                }
 
         }
 
         new_restaurant_id = Restaurant.insert(new_restaurant)
-        toReturn = jsonify({'data': {'restaurant': request.json, 'restaurantId': str(new_restaurant_id)}})
-    else:
-        toReturn = jsonify({'error': 'invalid restaurant' + request.json}), 403
-    return toReturn
+        return jsonify({'data': {'restaurant': request.json, 'restaurantId': str(new_restaurant_id)}})
+    return jsonify({'error': 'invalid restaurant' + request.json}), 403
+
 
 @restaurant_api.route('/admin/restaurant/delete/<restaurant_id>', strict_slashes=False, methods=['POST'])
 def delete_restaurant(restaurant_id):
@@ -107,9 +101,5 @@ def delete_restaurant(restaurant_id):
     if restaurant is not None and g.is_admin:
         # remove restaurant
         Restaurant.remove(restaurant_id)
-        #return jsonify({'data': {'success': True}})
-        toReturn = jsonify({'data': {'success': True}})
-
-    else:
-        toReturn = jsonify({'error': 'No restaurant found with id ' + restaurant_id})
-    return toReturn
+        return jsonify({'data': {'success': True}})
+    return jsonify({'error': 'No restaurant found with id ' + restaurant_id})

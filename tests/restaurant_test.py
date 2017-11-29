@@ -5,6 +5,7 @@ from hopkin.app import flask_app
 from hopkin.models.restaurants import Restaurant
 from hopkin.models.users import User
 
+
 class TestRestaurantRoute(unittest.TestCase):
     __test_restaurant_data_1 = {
         'address':
@@ -66,7 +67,7 @@ class TestRestaurantRoute(unittest.TestCase):
 
         result = self.app.get('/restaurant')
         json_data = json.loads(result.data)
-        self.assertTrue(len(json_data['data']['restaurant']) >= 2, 'no items in db')
+        self.assertTrue(len(json_data['data']['restaurants']) >= 2, 'no items in db')
 
         with flask_app.app_context():
             Restaurant.remove(restaurant_1_id)
@@ -102,7 +103,8 @@ class TestRestaurantRoute(unittest.TestCase):
             Restaurant.remove(json_data['data']['restaurantId'])
             User.remove(json_response_reg['data']['user']['email'])
 
-        return {'id': json_data['data']['restaurantId'], 'token': admin_token, 'restaurant': json_data['data']['restaurant']}
+        return {'id': json_data['data']['restaurantId'], 'token': admin_token, 'restaurant':
+                json_data['data']['restaurant']}
 
     def test_admin_del_restaurant(self):
         json_response_reg = self.__register_user(self.__admin_user_data)
