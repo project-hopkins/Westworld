@@ -89,8 +89,8 @@ def add_new_restaurant() -> tuple:
         }
 
         new_restaurant_id = Restaurant.insert(new_restaurant)
-
         return jsonify({'data': {'restaurant': request.json, 'restaurantId': str(new_restaurant_id)}})
+
     else:
         return jsonify({'error': 'invalid restaurant' + request.json}), 403
 
@@ -108,6 +108,9 @@ def delete_restaurant(restaurant_id):
     if restaurant is not None and g.is_admin:
         # remove restaurant
         Restaurant.remove(restaurant_id)
-        return jsonify({'data': {'success': True}})
+        #return jsonify({'data': {'success': True}})
+        toReturn = jsonify({'data': {'success': True}})
+
     else:
-        return jsonify({'error': 'No restaurant found with id ' + restaurant_id})
+        toReturn = jsonify({'error': 'No restaurant found with id ' + restaurant_id})
+    return toReturn
