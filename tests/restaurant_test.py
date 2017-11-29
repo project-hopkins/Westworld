@@ -5,7 +5,6 @@ from hopkin.app import flask_app
 from hopkin.models.restaurants import Restaurant
 from hopkin.models.users import User
 
-
 class TestRestaurantRoute(unittest.TestCase):
     __test_restaurant_data_1 = {
         'address':
@@ -70,7 +69,8 @@ class TestRestaurantRoute(unittest.TestCase):
         self.assertTrue(len(json_data['data']['restaurant']) >= 2, 'no items in db')
 
         with flask_app.app_context():
-
+            Restaurant.remove(restaurant_1_id)
+            Restaurant.remove(restaurant_2_id)
 
     def test_get_restaurant_by_id(self):
         restaurant_id = self.__add_restaurant(self.__test_restaurant_data_1)
