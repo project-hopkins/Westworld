@@ -116,7 +116,8 @@ class TestRestaurantRoute(unittest.TestCase):
             headers={'Content-Type': 'application/json', 'token': admin_token},
         )
         json_data = json.loads(result.data)
-        self.assertTrue(json_data['data']['success'] is not None, 'fail delete restaurant')
+        # self.assertTrue(json_data['data']['success'] is not None, 'fail delete restaurant')
+        self.assertDictEqual(json_data, {'data': {'success': True}}, 'fail delete restaurant')
 
         with flask_app.app_context():
             Restaurant.remove(restaurant_id)
