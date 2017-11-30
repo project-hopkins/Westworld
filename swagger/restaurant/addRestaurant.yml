@@ -1,0 +1,50 @@
+Adds a new restaurant to the database
+---
+tags:
+  - restaurant
+definitions:
+  - schema:
+      id: AddRestaurantResponse
+      properties:
+        name:
+         type: string
+         description: full restaurant object
+parameters:
+  - in: body
+    name: restaurantObject
+    schema:
+      id: Restaurant
+      properties:
+        address:
+          description: restaurant address
+          schema:
+            id: restAddress
+            properties:
+              streetNum:
+                type: integer
+              streetName:
+                type: string
+              city:
+                type: string
+              province:
+                type: string
+              postalCode:
+                type: string
+        location:
+          description: restaurant location
+          schema:
+            id: restLocation
+            properties:
+              longitude:
+                type: number
+              latitude:
+                type: number
+responses:
+  200:
+    description: Restaurant Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/AddRestaurantResponse'
+  403:
+    description: error invalid restaurant
