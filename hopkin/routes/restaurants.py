@@ -5,27 +5,6 @@ from flask import Blueprint, jsonify, request, g
 restaurant_api = Blueprint('restaurant_Api', __name__)
 
 
-def get_restaurant_as_object(restaurant):
-    return {
-        "_id": str(restaurant['_id']),
-        "address":
-            {
-                'streetNumber': restaurant['address']['streetNumber'],
-                'streetName': restaurant['address']['streetName'],
-                'city': restaurant['address']['city'],
-                'province': restaurant['address']['province'],
-                'postalCode': restaurant['address']['postalCode']
-
-            },
-        'location':
-            {
-                'longitude': restaurant['location']['longitude'],
-                'latitude': restaurant['location']['latitude']
-            }
-
-    }
-
-
 @restaurant_api.route('/restaurant', strict_slashes=False, methods=['GET'])
 def get_all_restaurants() -> tuple:
     """
@@ -51,9 +30,9 @@ def get_restaurant_by_id(restaurant_id) -> tuple:
     """
     from hopkin.models.restaurants import Restaurant
     # find specific restaurant
-    restaurant = Restaurant.get_by_id(restaurant_id)
+    restaurant = dumps(Restaurant.get_by_id(restaurant_id))
 
-    return jsonify({'data': {'restaurant': get_restaurant_as_object(restaurant)}})
+    return jsonify({'data': {'restaurant': json.loads(restaurant)}})
 
 
 @restaurant_api.route('/admin/restaurant/add', strict_slashes=False, methods=['POST'])
