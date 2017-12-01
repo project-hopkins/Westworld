@@ -16,7 +16,7 @@ def get_all_restaurants() -> tuple:
     from hopkin.models.restaurants import Restaurant
 
     # get all restaurant
-    restaurants = dumps(Restaurant.get_all().find())
+    restaurants = dumps(Restaurant.get_all())
     return jsonify({'data': {'restaurants': json.loads(restaurants)}})
 
 

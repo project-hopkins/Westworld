@@ -8,7 +8,7 @@ class Restaurant:
 
     @staticmethod
     def get_all():
-        return flask_db.db[Restaurant.collection_name]
+        return flask_db.db[Restaurant.collection_name].find()
 
     @staticmethod
     def get_by_id(restaurant_id):
