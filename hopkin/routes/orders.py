@@ -63,6 +63,4 @@ def add_order() -> tuple:
             'message': 'order added with id ' + str(new_order_id),
             'orderId': str(new_order_id)
         }})
-    else:
-        return jsonify({'error': 'no order placed'}), 401
-
+    return jsonify({'error': 'no order placed'}), 401
