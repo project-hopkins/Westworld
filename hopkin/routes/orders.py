@@ -57,8 +57,7 @@ def add_order() -> tuple:
             'date': request.json['date']
         }
         new_order_id = Order.insert(new_order)
-        if 'pushUserId' in request.json:
-            send_notification(request.json['pushUserId'])
+
         # returns a message
         return jsonify({'data': {
             'message': 'order added with id ' + str(new_order_id),
@@ -67,19 +66,3 @@ def add_order() -> tuple:
     else:
         return jsonify({'error': 'no order placed'}), 401
 
-
-def send_notification(push_user_id: str):
-    """
-    Sends a push notification to the user
-    :param push_user_id: 
-    :return: 
-    """
-    header = {"Content-Type": "application/json; charset=utf-8",
-              "Authorization": "Basic ZmI2ZTQ2OGQtMTkxMC00OGFhLTkxODItNGY0NTI4M2U5ZDhl"}
-    body = {
-        "app_id": "0c73a76c-be9a-4c17-ab9e-0ad31cbaa349",
-        "include_player_ids": [push_user_id],
-        "contents": {"en": "Your order is now being processed"}
-    }
-    # req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(body))
-    # print(req.status_code, req.reason)
