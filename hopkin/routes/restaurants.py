@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request, g
 restaurant_api = Blueprint('restaurant_Api', __name__)
 
 
-@restaurant_api.route('/restaurant', strict_slashes=False, methods=['GET'])
+@restaurant_api.route('/restaurant', methods=['GET'])
 def get_all_restaurants() -> tuple:
     """
     swagger_from_file: ../swagger/restaurant/getRestaurants.yml
@@ -20,7 +20,7 @@ def get_all_restaurants() -> tuple:
     return jsonify({'data': {'restaurants': json.loads(restaurants)}})
 
 
-@restaurant_api.route('/restaurant/id/<restaurant_id>', strict_slashes=False, methods=['GET'])
+@restaurant_api.route('/restaurant/id/<restaurant_id>', methods=['GET'])
 def get_restaurant_by_id(restaurant_id) -> tuple:
     """
     swagger_from_file: ../swagger/restaurant/getRestaurantbyId.yml
@@ -35,7 +35,7 @@ def get_restaurant_by_id(restaurant_id) -> tuple:
     return jsonify({'data': {'restaurant': json.loads(restaurant)}})
 
 
-@restaurant_api.route('/admin/restaurant/add', strict_slashes=False, methods=['POST'])
+@restaurant_api.route('/admin/restaurant/add', methods=['POST'])
 def add_new_restaurant() -> tuple:
     """
     swagger_from_file: ../swagger/restaurant/addRestaurant.yml
@@ -67,7 +67,7 @@ def add_new_restaurant() -> tuple:
     return jsonify({'error': 'invalid restaurant' + request.json}), 403
 
 
-@restaurant_api.route('/admin/restaurant/delete/<restaurant_id>', strict_slashes=False, methods=['POST'])
+@restaurant_api.route('/admin/restaurant/delete/<restaurant_id>', methods=['POST'])
 def delete_restaurant(restaurant_id):
     """
     swagger_from_file: ../swagger/restaurant/deleteRestaurant.yml

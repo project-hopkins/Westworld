@@ -6,7 +6,7 @@ from flask import Blueprint, jsonify, request
 login_api = Blueprint('loginApi', __name__)
 
 
-@login_api.route('/login/register', strict_slashes=False, methods=['POST'])
+@login_api.route('/login/register', methods=['POST'])
 def register() -> tuple:
     """
 
@@ -47,7 +47,7 @@ def register() -> tuple:
         return jsonify({'error': 'no username or password provided'}), 401
 
 
-@login_api.route('/login', strict_slashes=False, methods=['POST'])
+@login_api.route('/login', methods=['POST'])
 def login() -> tuple:
     """
 

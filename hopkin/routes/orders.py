@@ -1,5 +1,4 @@
 import json
-import requests
 from datetime import datetime
 from flask import Blueprint, jsonify, request, g
 
@@ -64,8 +63,7 @@ def add_order() -> tuple:
         return jsonify({'data': {
             'message': 'order added with id ' + str(new_order_id),
             'orderId': str(new_order_id)
-        }
-        })
+        }})
     else:
         return jsonify({'error': 'no order placed'}), 401
 
@@ -83,5 +81,5 @@ def send_notification(push_user_id: str):
         "include_player_ids": [push_user_id],
         "contents": {"en": "Your order is now being processed"}
     }
-    req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(body))
-    print(req.status_code, req.reason)
+    # req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(body))
+    # print(req.status_code, req.reason)

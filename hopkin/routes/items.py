@@ -17,7 +17,7 @@ def get_item_as_object(item):
     }
 
 
-@item_api.route('/item', strict_slashes=False, methods=['GET'])
+@item_api.route('/item', methods=['GET'])
 def get_all_items() -> tuple:
     """
     swagger_from_file: ../swagger/item/getItems.yml
@@ -36,7 +36,7 @@ def get_all_items() -> tuple:
     return jsonify({'data': {'items': items_list}})
 
 
-@item_api.route('/item/id/<item_id>', strict_slashes=False, methods=['GET'])
+@item_api.route('/item/id/<item_id>', methods=['GET'])
 def get_item_by_id(item_id) -> tuple:
     """
     swagger_from_file: ../swagger/item/getItem.yml
@@ -51,7 +51,7 @@ def get_item_by_id(item_id) -> tuple:
     return jsonify({'data': {'item': get_item_as_object(item)}})
 
 
-@item_api.route('/item/category/<category>', strict_slashes=False, methods=['GET'])
+@item_api.route('/item/category/<category>', methods=['GET'])
 def get_item_by_category(category) -> tuple:
     """
     swagger_from_file: ../swagger/item/getItemsByCategory.yml
@@ -70,7 +70,7 @@ def get_item_by_category(category) -> tuple:
     return jsonify({'data': {'items': items_list}})
 
 
-@item_api.route('/item/category/<category>/count', strict_slashes=False, methods=['GET'])
+@item_api.route('/item/category/<category>/count', methods=['GET'])
 def get_category_count(category) -> tuple:
     """
     swagger_from_file: ../swagger/item/getNumItemsInCat.yml
@@ -83,7 +83,7 @@ def get_category_count(category) -> tuple:
     return jsonify({'data': {'count': len(json.loads(json_response.data)['data']['items'])}})
 
 
-@item_api.route('/item/search', strict_slashes=False, methods=['GET'])
+@item_api.route('/item/search', methods=['GET'])
 def search_item() -> tuple:
     """
     swagger_from_file: ../swagger/item/searchItem.yml
@@ -123,7 +123,7 @@ def search_item() -> tuple:
     return jsonify({'data': {'items': items_list}})
 
 
-@item_api.route('/admin/item/add', strict_slashes=False, methods=['POST'])
+@item_api.route('/admin/item/add', methods=['POST'])
 def add_new_item() -> tuple:
     """
     swagger_from_file: ../swagger/item/itemAdd.yml
@@ -149,7 +149,7 @@ def add_new_item() -> tuple:
         return jsonify({'error': 'invalid item' + request.json}), 403
 
 
-@item_api.route('/admin/item/delete/<item_id>', strict_slashes=False, methods=['POST'])
+@item_api.route('/admin/item/delete/<item_id>', methods=['POST'])
 def delete_item(item_id):
     """
     swagger_from_file: ../swagger/item/deleteItem.yml
@@ -167,7 +167,7 @@ def delete_item(item_id):
         return jsonify({'error': 'No item found with id ' + item_id})
 
 
-@item_api.route('/admin/item/update', strict_slashes=False, methods=['POST'])
+@item_api.route('/admin/item/update', methods=['POST'])
 def update_item():
     """
     swagger_from_file: ../swagger/item/updateItem.yml
