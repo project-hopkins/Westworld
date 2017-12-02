@@ -145,8 +145,7 @@ def add_new_item() -> tuple:
         new_item_id = Item.insert(new_item)
 
         return jsonify({'data': {'item': request.json, 'itemId': str(new_item_id)}})
-    else:
-        return jsonify({'error': 'invalid item' + request.json}), 403
+    return jsonify({'error': 'invalid item' + request.json}), 403
 
 
 @item_api.route('/admin/item/delete/<item_id>', methods=['POST'])
@@ -163,8 +162,7 @@ def delete_item(item_id):
         # remove item
         Item.remove(item_id)
         return jsonify({'data': {'success': True}})
-    else:
-        return jsonify({'error': 'No item found with id ' + item_id})
+    return jsonify({'error': 'No item found with id ' + item_id})
 
 
 @item_api.route('/admin/item/update', methods=['POST'])
@@ -191,5 +189,4 @@ def update_item():
         return jsonify({'data': {'message': 'Updated with item id: ' + str(item_update['_id']),
                                  'mongo_id': str(item_update['_id'])}
                         })
-    else:
-        return jsonify({'error': 'item not updated'})
+    return jsonify({'error': 'item not updated'})
