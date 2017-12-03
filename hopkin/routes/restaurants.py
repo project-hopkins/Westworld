@@ -16,7 +16,7 @@ def get_all_restaurants() -> tuple:
     from hopkin.models.restaurants import Restaurant
 
     # get all restaurant
-    restaurants = dumps(Restaurant.get_all().find())
+    restaurants = dumps(Restaurant.get_all())
     return jsonify({'data': {'restaurants': json.loads(restaurants)}})
 
 
@@ -82,3 +82,23 @@ def delete_restaurant(restaurant_id):
         Restaurant.remove(restaurant_id)
         return jsonify({'data': {'success': True}})
     return jsonify({'error': 'No restaurant found with id ' + restaurant_id})
+
+
+@restaurant_api.route('/restaurant/closest', strict_slashes=False, methods=['POST'])
+def get_closest_restaurants():
+    """
+    swagger_from_file: ../swagger/restaurant/deleteRestaurant.yml
+    
+    returns top 3 closest restaurants 
+    :return: 
+    """
+    from hopkin.models.restaurants import Restaurant
+
+    restaurants = list(Restaurant.get_all())
+    long, lat = request.json['longitude'], request.json['latitude']
+    restaurants.sort(key=lambda rest: (
+                                          (long - rest['location']['longitude']) ** 2 +
+                                          (lat - rest['location']['latitude']) ** 2
+                                       ) ** 0.5)
+
+    return jsonify({'data': {'restaurants': json.loads(dumps(restaurants[:3]))}})
