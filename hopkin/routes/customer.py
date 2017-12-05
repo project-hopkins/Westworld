@@ -88,7 +88,6 @@ def customer_profile_update() -> tuple:
         if request.json is not None:
             user_update = {
                 'username': request.json['username'],
-                'password': request.json['password'],
                 'displayName': {
                     'firstName': request.json['displayName']['firstName'],
                     'lastName': request.json['displayName']['lastName']
