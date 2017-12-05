@@ -11,9 +11,6 @@ parameters:
         username:
           type: string
           description: username
-        password:
-          type: string
-          description: user password
         displayName:
           description: name used for display in UI
           schema:

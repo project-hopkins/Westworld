@@ -62,7 +62,7 @@ class TestCustomerInfo(unittest.TestCase):
         # update user info
         updated_data = '{"address": {"name": "Baker", "number": 221, "postalCode": "M3E5R1", "streetType": "Street"}, ' \
                        '"adminRights": false, "displayName": {"firstName": "Jane", "lastName": "Doe"}, ' \
-                       '"email": "example@example.com", "password": "password", "paymentInfo": {"cardType": "VISA", ' \
+                       '"email": "example@example.com", "paymentInfo": {"cardType": "VISA", ' \
                        '"expiry": "1/1/17 12:00:00 AM UTC", "name": "Jane Doe", "num": 451535486}, "username": "Jane"}'
 
         result = self.app.post('/customer/profile/edit', data=updated_data, headers={'token': json_response})
