@@ -1,4 +1,5 @@
 import copy
+import re
 from hopkin.app import flask_db
 from bson.objectid import ObjectId
 
@@ -31,8 +32,8 @@ class Item:
         return flask_db.db[Item.collection_name].find_one({'name': name})
 
     @staticmethod
-    def get_by_name_starts_with(search_string):
-        return flask_db.db[Item.collection_name].find({'name': {'$regex': '^' + search_string}})
+    def get_by_name_search(search_string):
+        return flask_db.db[Item.collection_name].find({'name': re.compile(search_string, re.IGNORECASE)})
 
     @staticmethod
     def get_by_tag_starts_with(search_string):
