@@ -12,6 +12,7 @@ from hopkin.routes.orders import order_api
 from hopkin.routes.restaurants import restaurant_api
 
 flask_app = Flask(__name__)
+flask_app.url_map.strict_slashes = False
 flask_app.config['MONGO_URI'] = os.getenv('DBURI', 'mongodb://localhost/kanaoreeves')
 flask_app.config['MONGO_DBNAME'] = 'kanaoreeves'
 flask_db = PyMongo(flask_app)
@@ -98,4 +99,4 @@ def handel500(error):
 
 
 if __name__ == "__main__":
-    flask_app.run(debug=True)
+    flask_app.run(debug=False)

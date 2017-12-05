@@ -8,7 +8,7 @@ def get_cc_number(cc_number: int):
     return '*'*12 + str(cc_number)[12:]
 
 
-@customer_api.route('/customer/payment', strict_slashes=False, methods=['GET'])
+@customer_api.route('/customer/payment', methods=['GET'])
 def customer_payment_info() -> dict:
     """
 
@@ -33,7 +33,7 @@ def customer_payment_info() -> dict:
     })
 
 
-@customer_api.route('/customer/profile', strict_slashes=False, methods=['GET'])
+@customer_api.route('/customer/profile', methods=['GET'])
 def customer_profile_info() -> dict:
     """
 
@@ -72,7 +72,7 @@ def customer_profile_info() -> dict:
     })
 
 
-@customer_api.route('/customer/profile/edit', strict_slashes=False, methods=['POST'])
+@customer_api.route('/customer/profile/edit', methods=['POST'])
 def customer_profile_update() -> tuple:
     """
 
