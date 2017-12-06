@@ -1,11 +1,10 @@
 import unittest
-from keanu.app import flask_app
-from keanu.models.users import User, UserFullName, PaymentInfo, Address
+from hopkin.app import flask_app
+from hopkin.models.users import User
 import datetime
 
 
 class TestDB(unittest.TestCase):
-
     def setUp(self):
         """
         Setup app for testing
@@ -21,27 +20,31 @@ class TestDB(unittest.TestCase):
         self.assertFalse(self.app is None)
 
     def test_add_new_user(self):
-        new_user = User(
-            username='aaron',
-            password='password',
-            displayName=UserFullName(firstName='Aaron', lastName='Smith'),
-            email='aaron@example.com',
-            adminRights=False,
-            paymentInfo=PaymentInfo(
-               name='Aaron Smith',
-               cardType='VISA',
-               num=451535486,
-               expiry=datetime.datetime(2017, 1, 1)
-            ),
-            address=Address(
-               number=123,
-               name='Main',
-               streetType='Boulevard',
-               postalCode='M3E5R1'
-            )
-        )
+        new_user = {
+            'username': 'aaron',
+            'password': 'password',
+            'displayName': {
+                'firstName': 'Aaron',
+                'lastName': 'Smith'
+            },
+            'email': 'aaron@example.com',
+            'adminRights': False,
+            'paymentInfo': {
+                'name': 'Aaron Smith',
+                'cardType': 'VISA',
+                'num': 451535486,
+                'expiry': datetime.datetime(2017, 1, 1)
+            },
+            'address': {
+                'number': 123,
+                'name': 'Main',
+                'streetType': 'Boulevard',
+                'postalCode': 'M3E5R1'
+            }
+        }
 
-        new_user.save()
-        found_user = User.query.filter(User.email == new_user.email).first()
-        self.assertEqual(new_user.email, found_user.email, "User emails not equal")
-        new_user.remove()
+        with flask_app.app_context():
+            User.save(new_user)
+            found_user = User.get_by_email(new_user['email'])
+            self.assertEqual(new_user['email'], found_user['email'], "User emails not equal")
+            User.remove(new_user['email'])

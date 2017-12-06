@@ -1,0 +1,58 @@
+updates the users profile by resetting the whole user object. token in header required
+---
+tags:
+  - users
+parameters:
+  - in: body
+    name: user
+    schema:
+      id: userObject
+      properties:
+        username:
+          type: string
+          description: username
+        displayName:
+          description: name used for display in UI
+          schema:
+            id: DisplayName
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+        email:
+          type: string
+        adminRights:
+          type: boolean
+          default: false
+        paymentInfo:
+          description: payment info for user
+          schema:
+            id: PaymentInfo
+            properties:
+              name:
+                type: string
+              cardType:
+                type: string
+                enum: ["VISA", "MASTERCARD", "AMEX"]
+              num:
+                type: num
+              expiry:
+                type: string
+                format: date-time
+        address:
+          description: address info for user
+          schema:
+            id: Address
+            properties:
+              number:
+                type: number
+              name:
+                type: string
+              streetType:
+                type: string
+              postalCode:
+                type: string
+responses:
+  201:
+    description: User created

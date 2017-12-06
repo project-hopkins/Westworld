@@ -1,0 +1,35 @@
+Gets username password and returns a JWT
+---
+tags:
+  - login
+definitions:
+  - schema:
+      id: LoginResponse
+      properties:
+        name:
+         type: string
+         description: the users JWT
+      properties:
+        name:
+         type: string
+         description: If the user has admin rights
+parameters:
+  - in: header
+    name: username
+    description: username of user
+    type: string
+    required: true
+  - in: header
+    name: password
+    description: password of user
+    type: string
+    required: true
+responses:
+  200:
+    description: JWT Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/LoginResponse'
+  403:
+    description: error with username or password

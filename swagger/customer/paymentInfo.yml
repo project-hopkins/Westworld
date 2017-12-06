@@ -1,0 +1,18 @@
+Get the user payment information with token in header
+---
+tags:
+  - customer
+definitions:
+  - schema:
+      id: paymentInfo
+      properties:
+        name:
+         type: object
+         description: full paymentInfo object
+responses:
+  200:
+    description: Payment Info
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/paymentInfo'

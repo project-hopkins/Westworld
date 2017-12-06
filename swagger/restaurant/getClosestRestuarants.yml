@@ -1,0 +1,30 @@
+Gets top 3 closes retaurants from specified location
+---
+tags:
+  - restaurant
+definitions:
+  - schema:
+      id: GetClosestRestaurantsResponse
+      properties:
+        name:
+         type: object
+         description: list of closest restaurants
+parameters:
+  - in: body
+    name: locationObject
+    schema:
+      id: Location
+      properties:
+        longitude:
+          type: number
+        latitude:
+          type: number
+responses:
+  200:
+    description: Restaurant Object List
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetClosestRestaurantsResponse'
+  403:
+    description: error invalid location

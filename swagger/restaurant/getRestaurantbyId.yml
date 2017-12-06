@@ -1,0 +1,25 @@
+Gets one restaurant from the database by id in the path
+---
+tags:
+  - restaurant
+definitions:
+  - schema:
+      id: GetRestaurantResponse
+      properties:
+        name:
+         type: string
+         description: full restaurant object
+parameters:
+  - in: path
+    name: restaurant_id
+    type: string
+    required: true
+responses:
+  200:
+    description: restaurant Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetRestaurantResponse'
+  403:
+    description: error

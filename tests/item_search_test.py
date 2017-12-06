@@ -1,6 +1,6 @@
 import json
 import unittest
-from keanu.app import flask_app
+from hopkin.app import flask_app
 
 
 class TestItemRoute(unittest.TestCase):

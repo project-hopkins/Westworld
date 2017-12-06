@@ -1,6 +1,6 @@
 import unittest
 import json
-from keanu.app import flask_app
+from hopkin.app import flask_app
 
 
 class TestToken(unittest.TestCase):

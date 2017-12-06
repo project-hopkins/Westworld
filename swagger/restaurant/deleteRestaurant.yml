@@ -1,0 +1,19 @@
+Delete Restaurant from the database
+---
+tags:
+  - restaurant
+definitions:
+  - schema:
+      id: DeleteRestaurantResponse
+      properties:
+        name:
+         type: string
+         description: delete a restaurant
+parameters:
+  - in: path
+    name: restaurant_id
+    type: string
+    required: true
+responses:
+  200:
+    description: Success True
