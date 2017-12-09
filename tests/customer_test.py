@@ -73,6 +73,22 @@ class TestCustomerInfo(unittest.TestCase):
             user = User.get_by_token(json_response)
             User.remove(user['email'])
 
+    def test_customer_password_update(self):
+        json_response_reg = self.__register_user()
+        token = self.__login()
+
+        # password to reset
+        password_data = '{"oldpass": "smith", "newpass": "smith123"}'
+
+        result = self.app.post('/customer/password/edit', data=password_data, headers={'token': token}, content_type='application/json')
+        json_result = json.loads(result.data)
+        self.assertTrue(json_result['success'], True)
+
+        with flask_app.app_context():
+            user = User.get_by_token(token)
+            User.remove(user['email'])
+
+
     def __login(self):
         login_result = self.app.post('/login', headers={'username': 'steve', 'password': 'smith'})
         return json.loads(login_result.data)['data']['token']
