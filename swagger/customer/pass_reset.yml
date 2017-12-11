@@ -1,0 +1,19 @@
+Resets a users password with token in header
+---
+tags:
+  - users
+parameters:
+  - in: body
+    name: user
+    schema:
+      id: passwords
+      properties:
+        oldpass:
+          type: string
+          description: old user password
+        newpass:
+          type: string
+          description
+responses:
+  201:
+    description: Password changed

@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, g, request
+from werkzeug.security import check_password_hash, generate_password_hash
 import datetime
 
 customer_api = Blueprint('customer_api', __name__)
@@ -114,3 +115,29 @@ def customer_profile_update() -> tuple:
         return jsonify({'data': {'user': user_update}})
     else:
         return jsonify({'error': 'user not updated'}), 400
+
+
+@customer_api.route('/customer/password/edit', methods=['POST'])
+def customer_password_update() -> tuple:
+    """
+
+    Allows a user to change password
+    :return:
+    """
+    from hopkin.models.users import User
+
+    if request.json is None:
+        return jsonify({'error': 'password not changed'}), 400
+
+    # get user from db
+    user = User.get_by_id(g.user_id)
+
+    # check if given password matches password in db
+    if not check_password_hash(user['password'], request.json['oldpass']):
+        return jsonify({'error': 'old passwords don\'t match'}), 400
+
+    user['password'] = generate_password_hash(request.json['newpass'])
+
+    User.save(user)
+
+    return jsonify({'success': True})
