@@ -1,4 +1,5 @@
 import json
+from bson.errors import InvalidId
 from flask import Blueprint, jsonify, request, g
 
 item_api = Blueprint('itemApi', __name__)
@@ -123,6 +124,47 @@ def search_item() -> tuple:
     return jsonify({'data': {'items': items_list}})
 
 
+@item_api.route('/rate/item', methods=['POST'])
+def rate_item() -> tuple:
+    """
+    Adds a user rating of an it
+    :return:
+    """
+    from hopkin.models.items import Item
+    from hopkin.models.ratings import Rating
+
+    if request.json is None:
+        return jsonify({'error': 'invalid request'})
+
+    try:
+        item_id = Item.get_by_id(request.json['itemid'])
+        if item_id is None:
+            return jsonify({'error': f"No item with id: {request.json['itemid']} found"}), 400
+        elif request.json['rating'] > 5:
+            return jsonify({'error': 'rating can\'t be grater than 5'}), 400
+
+    except InvalidId:
+        return jsonify({'error': 'Invalid item id format'})
+
+    user_id = str(g.user_id)
+
+    rating = Rating.get_rating(request.json['itemid'], user_id)
+
+    if rating is None:
+        Rating.save({
+            'item_id': request.json['itemid'],
+            'user_id': user_id,
+            'rating': request.json['rating']
+        })
+        return jsonify({'data': {'success': True, 'message': 'new rating added'}})
+    else:
+        rating['item_id'] = request.json['itemid']
+        rating['user_id'] = user_id
+        Rating.update(rating)
+        return jsonify({'data': {'success': True, 'message': 'rating updated'}})
+
+
+
 @item_api.route('/admin/item/add', methods=['POST'])
 def add_new_item() -> tuple:
     """
@@ -190,3 +232,5 @@ def update_item():
                                  'mongo_id': str(item_update['_id'])}
                         })
     return jsonify({'error': 'item not updated'})
+
+
