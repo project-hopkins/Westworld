@@ -30,6 +30,7 @@ class TestItemRoute(unittest.TestCase):
                         '"paymentInfo": {"name": "Aaron Fernandes","cardType": "VISA","num": 451535486,' \
                         '"expiry": "1/1/17 12:00:00 AM UTC"},"address":{"number": 345,"name": "Fake","streetType": ' \
                         '"Street","postalCode": "M3H5R1"}}'
+    __user_data = __admin_user_data.replace('true,', 'false,')
 
     def setUp(self):
         """
@@ -84,6 +85,15 @@ class TestItemRoute(unittest.TestCase):
 
         with flask_app.app_context():
             Item.remove(item['_id'])
+
+    def test_rate_item(self):
+        item = self.__add_item(self.__test_item_data_1)
+        result = self.app.post(
+            '/rate/item',
+
+        )
+
+
 
     def test_admin_add_item(self):
         json_response_reg = self.__register_user(self.__admin_user_data)

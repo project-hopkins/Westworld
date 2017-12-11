@@ -124,6 +124,19 @@ def search_item() -> tuple:
     return jsonify({'data': {'items': items_list}})
 
 
+@item_api.route('/rate/item/<itemid>', methods=['GET'])
+def get_rateing(itemid: str) -> tuple:
+    from hopkin.models.ratings import Rating
+
+    user_id = str(g.user_id)
+    rating = Rating.get_rating(itemid, user_id)
+
+    return jsonify({'data': {'rating': {
+        'item_id': rating['item_id'],
+        'rating': rating['rating'],
+    }}})
+
+
 @item_api.route('/rate/item', methods=['POST'])
 def rate_item() -> tuple:
     """
@@ -147,7 +160,6 @@ def rate_item() -> tuple:
         return jsonify({'error': 'Invalid item id format'})
 
     user_id = str(g.user_id)
-
     rating = Rating.get_rating(request.json['itemid'], user_id)
 
     if rating is None:
@@ -162,7 +174,6 @@ def rate_item() -> tuple:
         rating['user_id'] = user_id
         Rating.update(rating)
         return jsonify({'data': {'success': True, 'message': 'rating updated'}})
-
 
 
 @item_api.route('/admin/item/add', methods=['POST'])
