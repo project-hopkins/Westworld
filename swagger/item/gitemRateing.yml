@@ -1,4 +1,4 @@
-Gets an itme rating from the database with token in header
+Gets an item rating from the database with token in header
 ---
 tags:
   - item
@@ -6,12 +6,20 @@ definitions:
   - schema:
       id: GetItemRatingResponse
       properties:
-        name:
+        item_id:
          type: string
-         description: full item object
+         description: id of item
+        rating:
+          type: integer
+          description: rating of item
 parameters:
+  - in: header
+    name: token
+    description: user token
+    type: string
+    required: true
   - in: path
-    name: item_id
+    name: itemid
     type: string
     required: true
 responses:
@@ -23,4 +31,3 @@ responses:
         $ref: '#/definitions/GetItemRatingResponse'
   400:
     description: error
-ddddddd

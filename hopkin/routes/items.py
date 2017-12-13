@@ -127,6 +127,8 @@ def search_item() -> tuple:
 @item_api.route('/rate/item/<itemid>', methods=['GET'])
 def get_rateing(itemid: str) -> tuple:
     """
+    swagger_from_file: ../swagger/item/gitemRateing.yml
+
     Gets a user rating of an item
     :param itemid:
     :return:
