@@ -1,26 +1,42 @@
-Gets an itme rating from the database with token in header
+Adds a new item rating to the database with token in header
+
+{
+	"itemid": "5a2fe88a0e68f70f4504aafa",
+	"rating": 4
+}
 ---
 tags:
   - item
 definitions:
   - schema:
-      id: GetItemRatingResponse
+      id: AddItemRatingResponse
       properties:
         name:
          type: string
-         description: full item object
+         description: success true
 parameters:
-  - in: path
-    name: item_id
+  - in: header
+    name: token
+    description: user token
     type: string
     required: true
+  - in: body
+    name: ratingObject
+    schema:
+      id: Rating
+      properties:
+        itemid:
+          type: string
+          description: item name
+        rating:
+          type: interger
+          description: user rating of an item out of 5
 responses:
   200:
     description: Item Object
     schema:
       type: object
       items:
-        $ref: '#/definitions/GetItemRatingResponse'
+        $ref: '#/definitions/AddItemRatingResponse'
   400:
-    description: error
-ddddddd
+    description: error invalid item_id uesr_id

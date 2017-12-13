@@ -125,9 +125,9 @@ def search_item() -> tuple:
 
 
 @item_api.route('/rate/item/<itemid>', methods=['GET'])
-def get_rateing(itemid: str) -> tuple:
+def get_rating(itemid: str) -> tuple:
     """
-    swagger_from_file: ../swagger/item/gitemRateing.yml
+    swagger_from_file: ../swagger/item/getItemRating.yml
 
     Gets a user rating of an item
     :param itemid:
@@ -239,7 +239,8 @@ def update_item():
         item_update['calories'] = request.json['calories']
         item_update['category'] = request.json['category']
         item_update['description'] = request.json['description']
-        item_update['imageURL'] = request.json['imageURL']
+        # will be updated to get base64 image
+        # item_update['imageURL'] = request.json['imageURL']
         item_update['name'] = request.json['name']
         item_update['price'] = request.json['price']
         item_update['tags'] = request.json['tags']
