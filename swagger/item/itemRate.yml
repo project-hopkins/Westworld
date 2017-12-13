@@ -1,9 +1,5 @@
 Adds a new item rating to the database with token in header
 
-{
-	"itemid": "5a2fe88a0e68f70f4504aafa",
-	"rating": 4
-}
 ---
 tags:
   - item
