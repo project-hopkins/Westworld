@@ -157,7 +157,7 @@ def rate_item() -> tuple:
             return jsonify({'error': 'rating can\'t be grater than 5'}), 400
 
     except InvalidId:
-        return jsonify({'error': 'Invalid item id format'})
+        return jsonify({'error': 'Invalid item id format'}), 400
 
     user_id = str(g.user_id)
     rating = Rating.get_rating(request.json['itemid'], user_id)
