@@ -174,11 +174,11 @@ def rate_item() -> tuple:
             'rating': request.json['rating']
         })
         return jsonify({'data': {'success': True, 'message': 'new rating added'}})
-    else:
-        rating['item_id'] = request.json['itemid']
-        rating['user_id'] = user_id
-        Rating.update(rating)
-        return jsonify({'data': {'success': True, 'message': 'rating updated'}})
+
+    rating['item_id'] = request.json['itemid']
+    rating['user_id'] = user_id
+    Rating.update(rating)
+    return jsonify({'data': {'success': True, 'message': 'rating updated'}})
 
 
 @item_api.route('/admin/item/add', methods=['POST'])
@@ -248,5 +248,3 @@ def update_item():
                                  'mongo_id': str(item_update['_id'])}
                         })
     return jsonify({'error': 'item not updated'})
-
-
