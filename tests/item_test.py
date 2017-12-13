@@ -93,13 +93,14 @@ class TestItemRoute(unittest.TestCase):
             '/rate/item/'+str(added_rateing['item']['_id']),
             headers={'Content-Type': 'application/json', 'token': added_rateing['token']}
         )
-        json_result  = json.loads(result.data)
+        json_result = json.loads(result.data)
 
         self.assertEqual(json_result['data']['rating']['rating'], 4, 'rating doesn\'t equal set value')
 
         with flask_app.app_context():
-            Item.remove(str(str(added_rateing['item']['_id'])))
-            User.remove(added_rateing['user_email'])
+            Item.remove(str(added_rateing['item']['_id']))
+            User.remove(added_rateing['user']['data']['user']['email'])
+            Rating.remove_all_ratings()
 
     def test_rate_item(self, keep_resources=False):
         json_response_reg = self.__register_user(self.__user_data)
@@ -118,12 +119,13 @@ class TestItemRoute(unittest.TestCase):
         self.assertEqual(json_result['data']['success'], True)
         if not keep_resources:
             with flask_app.app_context():
+                Rating.remove_all_ratings()
                 Item.remove(str(item['_id']))
                 User.remove(json_response_reg['data']['user']['email'])
         else:
             return {
                 'item': item,
-                'user_email': json_response_reg['data']['user']['email'],
+                'user': json_response_reg,
                 'token': token
             }
 

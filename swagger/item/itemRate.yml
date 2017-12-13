@@ -1,0 +1,25 @@
+Gets an itme rating from the database with token in header
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: GetItemRatingResponse
+      properties:
+        name:
+         type: string
+         description: full item object
+parameters:
+  - in: path
+    name: item_id
+    type: string
+    required: true
+responses:
+  200:
+    description: Item Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetItemRatingResponse'
+  400:
+    description: error

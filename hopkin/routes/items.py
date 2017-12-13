@@ -126,6 +126,11 @@ def search_item() -> tuple:
 
 @item_api.route('/rate/item/<itemid>', methods=['GET'])
 def get_rateing(itemid: str) -> tuple:
+    """
+    Gets a user rating of an item
+    :param itemid:
+    :return:
+    """
     from hopkin.models.ratings import Rating
 
     user_id = str(g.user_id)
@@ -140,7 +145,7 @@ def get_rateing(itemid: str) -> tuple:
 @item_api.route('/rate/item', methods=['POST'])
 def rate_item() -> tuple:
     """
-    Adds a user rating of an it
+    Adds a user rating of an item
     :return:
     """
     from hopkin.models.items import Item

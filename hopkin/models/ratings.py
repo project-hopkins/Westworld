@@ -31,3 +31,11 @@ class Rating:
     @staticmethod
     def remove(item_id):
         flask_db.db[Rating.collection_name].delete_one({'_id': item_id})
+
+    @staticmethod
+    def remove_all_ratings():
+        """
+        Test only
+        :return:
+        """
+        flask_db.db[Rating.collection_name].delete_many({})
