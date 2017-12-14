@@ -5,7 +5,7 @@ from flask import Blueprint, jsonify, request, g
 order_api = Blueprint('orderApi', __name__)
 
 
-@order_api.route('/order', strict_slashes=False, methods=['GET'])
+@order_api.route('/order', methods=['GET'])
 def get_user_orders() -> dict:
     """
     returns all the orders for user as a json array
@@ -33,7 +33,7 @@ def get_user_orders() -> dict:
     return jsonify({'data': {'orders': orders_list}})
 
 
-@order_api.route('/order/add', strict_slashes=False, methods=['POST'])
+@order_api.route('/order/add', methods=['POST'])
 def add_order() -> tuple:
     """
     Adds a new order to the database 

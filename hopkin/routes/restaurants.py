@@ -87,7 +87,7 @@ def delete_restaurant(restaurant_id):
 @restaurant_api.route('/restaurant/closest', strict_slashes=False, methods=['POST'])
 def get_closest_restaurants():
     """
-    swagger_from_file: ../swagger/restaurant/deleteRestaurant.yml
+    swagger_from_file: ../swagger/restaurant/getClosestRestuarants.yml
     
     returns top 3 closest restaurants 
     :return: 

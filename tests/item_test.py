@@ -4,6 +4,7 @@ import copy
 from hopkin.app import flask_app
 from hopkin.models.items import Item
 from hopkin.models.users import User
+from hopkin.models.ratings import Rating
 
 
 class TestItemRoute(unittest.TestCase):
@@ -32,6 +33,7 @@ class TestItemRoute(unittest.TestCase):
                         '"paymentInfo": {"name": "Aaron Fernandes","cardType": "VISA","num": 451535486,' \
                         '"expiry": "1/1/17 12:00:00 AM UTC"},"address":{"number": 345,"name": "Fake","streetType": ' \
                         '"Street","postalCode": "M3H5R1"}}'
+    __user_data = __admin_user_data.replace('true,', 'false,')
 
     def setUp(self):
         """
@@ -86,6 +88,48 @@ class TestItemRoute(unittest.TestCase):
 
         with flask_app.app_context():
             Item.remove(item['_id'])
+
+    def test_get_item_rateing(self):
+        added_rateing = self.test_rate_item(keep_resources=True)
+        result = self.app.get(
+            '/rate/item/'+str(added_rateing['item']['_id']),
+            headers={'Content-Type': 'application/json', 'token': added_rateing['token']}
+        )
+        json_result = json.loads(result.data)
+
+        self.assertEqual(json_result['data']['rating']['rating'], 4, 'rating doesn\'t equal set value')
+
+        with flask_app.app_context():
+            Item.remove(str(added_rateing['item']['_id']))
+            User.remove(added_rateing['user']['data']['user']['email'])
+            Rating.remove_all_ratings()
+
+    def test_rate_item(self, keep_resources=False):
+        json_response_reg = self.__register_user(self.__user_data)
+        token = self.__login_user(json.loads(self.__user_data))
+
+        item = self.__add_item(self.__test_item_data_1)
+        result = self.app.post(
+            '/rate/item',
+            headers={'Content-Type': 'application/json', 'token': token},
+            data=json.dumps({
+                "itemid": str(item['_id']),
+                "rating": 4
+            })
+        )
+        json_result = json.loads(result.data)
+        self.assertEqual(json_result['data']['success'], True)
+        if not keep_resources:
+            with flask_app.app_context():
+                Rating.remove_all_ratings()
+                Item.remove(str(item['_id']))
+                User.remove(json_response_reg['data']['user']['email'])
+        else:
+            return {
+                'item': item,
+                'user': json_response_reg,
+                'token': token
+            }
 
     def test_admin_add_item(self):
         json_response_reg = self.__register_user(self.__admin_user_data)

@@ -13,6 +13,7 @@ from hopkin.routes.restaurants import restaurant_api
 
 flask_app = Flask(__name__)
 flask_app.url_map.strict_slashes = False
+flask_app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 flask_app.config['MONGO_URI'] = os.getenv('DBURI', 'mongodb://localhost/kanaoreeves')
 flask_app.config['MONGO_DBNAME'] = 'kanaoreeves'
 flask_db = PyMongo(flask_app)
@@ -74,29 +75,34 @@ def spec():
     return jsonify(swag)
 
 
+############### Error Handling #########################
+
+def generate_error_response(error):
+    err_string = str(error.code) + '' + request.path + ' ' + error.description
+    flask_app.logger.error(err_string)
+    return jsonify({'error': err_string}), error.code
+
+
 @flask_app.errorhandler(404)
 def handel404(error):
     """
     Method to handle 404 error
     :return:
     """
-    err_string = 'Route not found: '+request.path
-    flask_app.logger.error(err_string)
-    return jsonify({'error': err_string+' '+error}), 404
+    return generate_error_response(error)
 
 
 @flask_app.errorhandler(400)
 def handel400(error):
-    err_string = str(error) + ' ' + request.path
-    flask_app.logger.error(err_string)
-    return jsonify({'error': err_string}), 400
+    return generate_error_response(error)
 
 
 @flask_app.errorhandler(500)
 def handel500(error):
-    flask_app.logger.error(error)
-    return jsonify({'error': error}), 500
+    flask_app.logger.error(str(error.args[0]))
+    return jsonify({'error': str(error.args[0])}), 500
 
 
 if __name__ == "__main__":
+    flask_app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
     flask_app.run(debug=False)
