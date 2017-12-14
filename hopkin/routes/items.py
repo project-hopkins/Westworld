@@ -194,3 +194,21 @@ def update_item():
                                  'mongo_id': str(item_update['_id'])}
                         })
     return jsonify({'error': 'item not updated'})
+
+@item_api.route('/item/recommendations', methods=['GET'])
+def get_recommendations() -> tuple:
+    """
+    swagger_from_file: ../swagger/item/getRecommended.yml
+
+    returns all the items as a json array
+    :return:
+    """
+    from hopkin.models.items import Item
+    # get all items
+    items = Item.get_recommended()
+    # create items list
+    items_list = []
+    # create response
+    for item in items:
+        items_list.append(get_item_as_object(item))
+    return jsonify({'data': {'items': items_list}})

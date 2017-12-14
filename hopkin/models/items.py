@@ -40,6 +40,10 @@ class Item:
         return flask_db.db[Item.collection_name].find({'tags': {'$regex': '^' + search_string}})
 
     @staticmethod
+    def get_recommended():
+        return flask_db.db[Item.collection_name].find({'isRecommended': 'true'})
+
+    @staticmethod
     def insert(new_item):
         return flask_db.db[Item.collection_name].insert_one(new_item).inserted_id
 
