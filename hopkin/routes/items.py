@@ -101,14 +101,14 @@ def search_item() -> tuple:
         return jsonify({'error': 'no search results provided'})
 
     query = query.title()
-    items = list(Item.get_by_name_starts_with(query.lower()))
+    items = list(Item.get_by_name_search(query.lower()))
     if len(query) > 3:
         items = items + list(Item.get_by_tag_starts_with(query.lower()))
 
     unique_ids = []
 
     for item in items:
-        if str(item.mongo_id) not in unique_ids:
+        if str(item['_id']) not in unique_ids:
             items_list.append({
                 "_id": str(item['_id']),
                 "name": item['name'],
