@@ -1,0 +1,38 @@
+Adds a new item rating to the database with token in header
+
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: AddItemRatingResponse
+      properties:
+        name:
+         type: string
+         description: success true
+parameters:
+  - in: header
+    name: token
+    description: user token
+    type: string
+    required: true
+  - in: body
+    name: ratingObject
+    schema:
+      id: Rating
+      properties:
+        itemid:
+          type: string
+          description: item name
+        rating:
+          type: interger
+          description: user rating of an item out of 5
+responses:
+  200:
+    description: Item Object
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/AddItemRatingResponse'
+  400:
+    description: error invalid item_id uesr_id

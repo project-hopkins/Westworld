@@ -1,4 +1,5 @@
 import json
+from bson.errors import InvalidId
 from flask import Blueprint, jsonify, request, g
 
 item_api = Blueprint('itemApi', __name__)
@@ -123,6 +124,65 @@ def search_item() -> tuple:
     return jsonify({'data': {'items': items_list}})
 
 
+@item_api.route('/rate/item/<itemid>', methods=['GET'])
+def get_rating(itemid: str) -> tuple:
+    """
+    swagger_from_file: ../swagger/item/getItemRating.yml
+
+    Gets a user rating of an item
+    :param itemid:
+    :return:
+    """
+    from hopkin.models.ratings import Rating
+
+    user_id = str(g.user_id)
+    rating = Rating.get_rating(itemid, user_id)
+
+    return jsonify({'data': {'rating': {
+        'item_id': rating['item_id'],
+        'rating': rating['rating'],
+    }}})
+
+
+@item_api.route('/rate/item', methods=['POST'])
+def rate_item() -> tuple:
+    """
+    Adds a user rating of an item
+    :return:
+    """
+    from hopkin.models.items import Item
+    from hopkin.models.ratings import Rating
+
+    if request.json is None:
+        return jsonify({'error': 'invalid request'})
+
+    try:
+        item_id = Item.get_by_id(request.json['itemid'])
+        if item_id is None:
+            return jsonify({'error': f"No item with id: {request.json['itemid']} found"}), 400
+        elif request.json['rating'] > 5:
+            return jsonify({'error': 'rating can\'t be grater than 5'}), 400
+
+    except InvalidId:
+        return jsonify({'error': 'Invalid item id format'}), 400
+
+    user_id = str(g.user_id)
+    rating = Rating.get_rating(request.json['itemid'], user_id)
+
+    if rating is None:
+        Rating.save({
+            'item_id': request.json['itemid'],
+            'user_id': user_id,
+            'rating': request.json['rating']
+        })
+        return jsonify({'data': {'success': True, 'message': 'new rating added'}})
+
+    rating['item_id'] = request.json['itemid']
+    rating['user_id'] = user_id
+    Rating.update(rating)
+    return jsonify({'data': {'success': True, 'message': 'rating updated'}})
+
+
 @item_api.route('/admin/item/add', methods=['POST'])
 def add_new_item() -> tuple:
     """
@@ -179,7 +239,8 @@ def update_item():
         item_update['calories'] = request.json['calories']
         item_update['category'] = request.json['category']
         item_update['description'] = request.json['description']
-        item_update['imageURL'] = request.json['imageURL']
+        # will be updated to get base64 image
+        # item_update['imageURL'] = request.json['imageURL']
         item_update['name'] = request.json['name']
         item_update['price'] = request.json['price']
         item_update['tags'] = request.json['tags']

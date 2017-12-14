@@ -10,6 +10,11 @@ definitions:
          type: string
          description: delete a restaurant
 parameters:
+  - in: header
+    name: token
+    description: user token
+    type: string
+    required: true
   - in: path
     name: restaurant_id
     type: string
