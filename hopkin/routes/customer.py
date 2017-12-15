@@ -86,35 +86,37 @@ def customer_profile_update() -> tuple:
 
         from hopkin.models.users import User
         # read the the user to the db
-        if request.json is not None:
-            user_update = {
-                'username': request.json['username'],
-                'displayName': {
-                    'firstName': request.json['displayName']['firstName'],
-                    'lastName': request.json['displayName']['lastName']
-                },
-                'email': request.json['email'],
-                'adminRights': request.json['adminRights'],
-                'paymentInfo': {
-                    'name': request.json['paymentInfo']['name'],
-                    'cardType': request.json['paymentInfo']['cardType'],
-                    'num': int(request.json['paymentInfo']['num']),
-                    'expiry': datetime.datetime.strptime(request.json['paymentInfo']['expiry'],
-                                                         "%w/%m/%y %I:%M:%S %p UTC")
-                },
-                'address': {
-                    'number': int(request.json['address']['number']),
-                    'name': request.json['address']['name'],
-                    'streetType': request.json['address']['streetType'],
-                    'postalCode': request.json['address']['postalCode']
-                }
+        if request.json is None:
+            return jsonify({'error': 'user not updated'}), 400
+
+        user_update = User.get_by_id(g.user_id)
+
+        user_update['username'] = request.json['username']
+        user_update['displayName'] = {
+                'firstName': request.json['displayName']['firstName'],
+                'lastName': request.json['displayName']['lastName']
+        }
+        user_update['email'] = request.json['email']
+        user_update['adminRights'] = request.json['adminRights']
+        user_update['address'] = {
+                'number': int(request.json['address']['number']),
+                'name': request.json['address']['name'],
+                'streetType': request.json['address']['streetType'],
+                'postalCode': request.json['address']['postalCode']
+        }
+
+        if request.json.get('paymentInfo') is not None:
+            user_update['paymentInfo'] = {
+                'name': request.json['paymentInfo']['name'],
+                'cardType': request.json['paymentInfo']['cardType'],
+                'num': int(request.json['paymentInfo']['num']),
+                'expiry': datetime.datetime.strptime(request.json['paymentInfo']['expiry'],
+                                                     "%w/%m/%y %I:%M:%S %p UTC")
             }
 
-            User.save(user_update)
+        User.save(user_update)
 
-        return jsonify({'data': {'user': user_update}})
-    else:
-        return jsonify({'error': 'user not updated'}), 400
+    return jsonify({'data': {'user': user_update}})
 
 
 @customer_api.route('/customer/password/edit', methods=['POST'])
