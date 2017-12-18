@@ -21,7 +21,7 @@ class Item:
 
     @staticmethod
     def get_by_id(item_id):
-        return flask_db.db[Item.collection_name].find_one({'_id': ObjectId(item_id)})
+        return flask_db.db[Item.collection_name].find_one({'_id': ObjectId(str(item_id))})
 
     @staticmethod
     def get_by_category(category):
@@ -54,4 +54,4 @@ class Item:
 
     @staticmethod
     def remove(item_id):
-        flask_db.db[Item.collection_name].delete_one({'_id': item_id})
+        flask_db.db[Item.collection_name].delete_one({'_id': ObjectId(str(item_id))})
