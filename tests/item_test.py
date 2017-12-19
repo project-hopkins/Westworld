@@ -197,7 +197,17 @@ class TestItemRoute(unittest.TestCase):
 
         result = self.app.get('/item/recommendations')
         json_data = json.loads(result.data)
+
+        contain_item_1 = False
+        not_contain_item_2 = True
+        for item in json_data['data']['items']:
+            if str(item['_id']) == str(item_1['_id']):
+                contain_item_1 = True
+            if str(item['_id']) == str(item_2['_id']):
+                not_contain_item_2 = False
+
         self.assertTrue(len(json_data['data']['items']) >= 1, 'no recommended items in db')
+        self.assertTrue(contain_item_1 and not_contain_item_2, 'inappropriate items are returned')
 
         with flask_app.app_context():
             Item.remove(item_1['_id'])
