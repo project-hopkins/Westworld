@@ -1,3 +1,4 @@
+import copy
 from hopkin.app import flask_db
 from bson.objectid import ObjectId
 
@@ -23,7 +24,8 @@ class User:
 
     @staticmethod
     def save(user):
-        flask_db.db[User.collection_name].save(user)
+        user_to_save = copy.deepcopy(user)
+        flask_db.db[User.collection_name].save(user_to_save)
 
     # Shouldn't be used in production. Only for testing purposes
     @staticmethod
