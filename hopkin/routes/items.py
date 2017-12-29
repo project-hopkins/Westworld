@@ -14,7 +14,8 @@ def get_item_as_object(item):
         "price": item['price'],
         "calories": item['calories'],
         "category": item['category'],
-        "tags": item['tags']
+        "tags": item['tags'],
+        "isRecommended": item['isRecommended']
     }
 
 
@@ -117,7 +118,8 @@ def search_item() -> tuple:
                 "price": item['price'],
                 "calories": item['calories'],
                 "category": item['category'],
-                "tags": item['tags']
+                "tags": item['tags'],
+                "isRecommended": item['isRecommended']
             })
             unique_ids.append(str(item['_id']))
 
@@ -199,7 +201,8 @@ def add_new_item() -> tuple:
             'price': request.json['price'],
             'calories': request.json['calories'],
             'category': request.json['category'],
-            'tags': request.json['tags']
+            'tags': request.json['tags'],
+            "isRecommended": request.json['isRecommended']
         }
 
         new_item_id = Item.insert(new_item)
@@ -244,6 +247,7 @@ def update_item():
         item_update['name'] = request.json['name']
         item_update['price'] = request.json['price']
         item_update['tags'] = request.json['tags']
+        item_update['isRecommended'] = request.json['isRecommended']
 
         Item.save(item_update)
 
@@ -251,3 +255,21 @@ def update_item():
                                  'mongo_id': str(item_update['_id'])}
                         })
     return jsonify({'error': 'item not updated'})
+
+@item_api.route('/item/recommendations', methods=['GET'])
+def get_recommendations() -> tuple:
+    """
+    swagger_from_file: ../swagger/item/getRecommended.yml
+
+    returns all the items as a json array
+    :return:
+    """
+    from hopkin.models.items import Item
+    # get all items
+    items = Item.get_recommended()
+    # create items list
+    items_list = []
+    # create response
+    for item in items:
+        items_list.append(get_item_as_object(item))
+    return jsonify({'data': {'items': items_list}})

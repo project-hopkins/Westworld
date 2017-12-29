@@ -21,7 +21,7 @@ class Item:
 
     @staticmethod
     def get_by_id(item_id):
-        return flask_db.db[Item.collection_name].find_one({'_id': ObjectId(item_id)})
+        return flask_db.db[Item.collection_name].find_one({'_id': ObjectId(str(item_id))})
 
     @staticmethod
     def get_by_category(category):
@@ -40,6 +40,10 @@ class Item:
         return flask_db.db[Item.collection_name].find({'tags': {'$regex': '^' + search_string}})
 
     @staticmethod
+    def get_recommended():
+        return flask_db.db[Item.collection_name].find({'isRecommended': 'true'})
+
+    @staticmethod
     def insert(new_item):
         return flask_db.db[Item.collection_name].insert_one(new_item).inserted_id
 
@@ -50,4 +54,4 @@ class Item:
 
     @staticmethod
     def remove(item_id):
-        flask_db.db[Item.collection_name].delete_one({'_id': item_id})
+        flask_db.db[Item.collection_name].delete_one({'_id': ObjectId(str(item_id))})

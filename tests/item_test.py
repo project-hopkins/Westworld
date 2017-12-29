@@ -15,7 +15,8 @@ class TestItemRoute(unittest.TestCase):
         'price': 9.99,
         'calories': 500,
         'category': 'Starter',
-        'tags': ['bread', 'healthy']
+        'tags': ['bread', 'healthy'],
+        'isRecommended': 'true'
     }
     __test_item_data_2 = {
         'name': 'Test Item 2',
@@ -24,7 +25,8 @@ class TestItemRoute(unittest.TestCase):
         'price': 9.992,
         'calories': 5002,
         'category': 'Entrees',
-        'tags': ['healthy']
+        'tags': ['healthy'],
+        'isRecommended': 'false'
     }
     __admin_user_data = '{"username": "aaron","password": "password","displayName": {"firstName": "Aaron",' \
                         '"lastName": "Fernandes"},"email": "aaron@example.com","adminRights": true, ' \
@@ -188,6 +190,28 @@ class TestItemRoute(unittest.TestCase):
         with flask_app.app_context():
             Item.remove(item['_id'])
             User.remove(json_response_reg['data']['user']['email'])
+
+    def test_get_recommended_items(self):
+        item_1 = self.__add_item(self.__test_item_data_1)
+        item_2 = self.__add_item(self.__test_item_data_2)
+
+        result = self.app.get('/item/recommendations')
+        json_data = json.loads(result.data)
+
+        contain_item_1 = False
+        not_contain_item_2 = True
+        for item in json_data['data']['items']:
+            if str(item['_id']) == str(item_1['_id']):
+                contain_item_1 = True
+            if str(item['_id']) == str(item_2['_id']):
+                not_contain_item_2 = False
+
+        self.assertTrue(len(json_data['data']['items']) >= 1, 'no recommended items in db')
+        self.assertTrue(contain_item_1 and not_contain_item_2, 'inappropriate items are returned')
+
+        with flask_app.app_context():
+            Item.remove(item_1['_id'])
+            Item.remove(item_2['_id'])
 
     def __add_item(self, data):
         with flask_app.app_context():

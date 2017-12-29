@@ -1,0 +1,18 @@
+Gets recommended items from the database
+---
+tags:
+  - item
+definitions:
+  - schema:
+      id: GetRecommededItemsResponse
+      properties:
+        name:
+         type: object
+         description: List of all the items
+responses:
+  200:
+    description: Item Object List
+    schema:
+      type: object
+      items:
+        $ref: '#/definitions/GetItemsResponse'
