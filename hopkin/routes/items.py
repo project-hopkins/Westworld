@@ -246,7 +246,7 @@ def update_item():
         item_update['category'] = request.json['category']
         item_update['description'] = request.json['description']
         # will be updated to get base64 image
-        # item_update['imageURL'] = request.json['imageURL']
+        item_update['imageURL'] = request.json['imageURL']
         item_update['name'] = request.json['name']
         item_update['price'] = request.json['price']
         item_update['tags'] = request.json['tags']
