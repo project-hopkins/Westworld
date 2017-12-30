@@ -143,6 +143,10 @@ def get_rating(itemid: str) -> tuple:
     user_id = str(g.user_id)
     rating = Rating.get_rating(itemid, user_id)
 
+    if rating is None:
+        return jsonify({
+            'error': {'error': {'message': 'No Rating for item'}}
+        })
     return jsonify({'data': {'rating': {
         'item_id': rating['item_id'],
         'rating': rating['rating'],
