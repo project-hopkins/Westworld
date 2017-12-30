@@ -5,8 +5,8 @@ from flask import Blueprint, jsonify, request, g
 item_api = Blueprint('itemApi', __name__)
 
 
-def get_item_as_object(item):
-    return {
+def get_item_as_object(item) -> dict:
+    return_item = {
         "_id": str(item['_id']),
         "name": item['name'],
         "description": item['description'],
@@ -14,9 +14,12 @@ def get_item_as_object(item):
         "price": item['price'],
         "calories": item['calories'],
         "category": item['category'],
-        "tags": item['tags'],
-        "isRecommended": item['isRecommended']
+        "tags": item['tags']
     }
+    if 'isRecommended' in item:
+        return_item['isRecommended'] = item['isRecommended']
+
+    return return_item
 
 
 @item_api.route('/item', methods=['GET'])
@@ -255,6 +258,7 @@ def update_item():
                                  'mongo_id': str(item_update['_id'])}
                         })
     return jsonify({'error': 'item not updated'})
+
 
 @item_api.route('/item/recommendations', methods=['GET'])
 def get_recommendations() -> tuple:
